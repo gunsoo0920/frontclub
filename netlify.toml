@@ -1,0 +1,17 @@
+[build]
+  command = "npm run build:prod"
+  publish = "dist"
+
+[context.production]
+  command = "npm run build:prod"
+
+[context.branch-deploy]
+  command = "npm run build:stage"
+
+[context.deploy-preview]
+  command = "npm run build:stage"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
