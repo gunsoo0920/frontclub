@@ -2,17 +2,29 @@ import { useState, useEffect } from "react"
 import Home from "./Home";
 
 export default function HomePage(){
+    // 유저정보
     const [user, setUser] = useState("testuser");
+    // 페이지 정보(main, review, login 등등)
     const [page, setPage] = useState("main");
+    // 카테고리 - 목록용
+    const [category, setCategory] = useState();
+    // 책 설정
+    const [bookId, setBookId] = useState();
 
-    const setUserHandle = (e) => {
-        setUser(e.target.value);
-    }
 
     const setPageHandle = (e) => {
         setPage(e)
     }
 
+    const setCategoryHandle = (e) => {
+        setCategory(e)
+    }
+
+    const setBookIdHandle = (e) => {
+        setBookId(e)
+    }
+
+    // 로그아웃용
     const logOutHandle = (e) => {
         alert("로그아웃 되었습니다.");
         setUser(null);
@@ -54,11 +66,12 @@ function PageHeader({user, setPageHandle, logOutHandle}){
     )
 }
 
-function PageBody({page, setPageHandle}){
+function PageBody({page, category, bookId, user, setPageHandle}){
     switch(page){
         case "main":
             return <Home setPageHandle={setPageHandle}></Home>;
         case "login":
+            // 
         case "book":
         case "review":
     }

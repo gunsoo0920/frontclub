@@ -1,4 +1,4 @@
-export default function HomeCategory({books, title}){
+export default function HomeCategory({category, books, title}){
     return(
         <selection className="category-section">
             <div className="section-header">
