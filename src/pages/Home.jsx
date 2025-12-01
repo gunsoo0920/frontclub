@@ -15,7 +15,7 @@ export default function Home(props){
         const selectBooks = books.filter(book => {
             return book.category === category;
         });
-        return selectBooks;
+        return selectBooks.slice(0, 6);
     }
 
     return(

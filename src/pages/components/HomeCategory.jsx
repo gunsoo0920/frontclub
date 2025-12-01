@@ -10,19 +10,12 @@ export default function HomeCategory({books, title}){
                     <div key={book.id}>
                         <img className="card-image" src={book.image_path} alt="" />
                         <div className="card-info">
-                            <h4>{book.id}</h4>
+                            <h4 className="card-title">{book.title}</h4>
                             <p>{book.authors}</p>
                         </div>
                     </div>
                 ))}
             </div>
         </selection>
-        //  <ul>
-        //         {books.map(book => (
-        //             <li key={book.id}>
-        //                 {book.id}: {book.title} - {book.author}
-        //             </li>
-        //         ))}
-        //     </ul>
     );
 }
