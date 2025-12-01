@@ -2,13 +2,13 @@ import { useState, useEffect } from "react"
 import Home from "./Home";
 
 export default function HomePage(){
-    // 유저정보
-    const [user, setUser] = useState("testuser");
-    // 페이지 정보(main, review, login 등등)
+    // 유저정보/String
+    const [userId, setUser] = useState("testuser");
+    // 페이지 정보(main, review, login 등등) / String
     const [page, setPage] = useState("main");
-    // 카테고리 - 목록용
+    // 카테고리 - 목록용/String
     const [category, setCategory] = useState();
-    // 책 설정
+    // 책 설정/String
     const [bookId, setBookId] = useState();
 
 
@@ -19,9 +19,10 @@ export default function HomePage(){
     const setCategoryHandle = (e) => {
         setCategory(e)
     }
-
+    
     const setBookIdHandle = (e) => {
         setBookId(e)
+        console.log(typeof e);
     }
 
     // 로그아웃용
@@ -38,20 +39,29 @@ export default function HomePage(){
 
     return(
         <div>
-            <PageHeader user={user} setPageHandle={setPageHandle} logOutHandle={logOutHandle}/>
-            <PageBody page={page} setPageHandle={setPageHandle} user={user}/>
+            <div>{page}{userId}{category}{bookId}</div>
+            <PageHeader userId={userId} setPageHandle={setPageHandle} logOutHandle={logOutHandle}/>
+            <PageBody 
+                page={page} 
+                category={category} 
+                BookId={bookId} 
+                userId={userId} 
+                setPageHandle={setPageHandle}
+                setBookIdHandle={setBookIdHandle}
+                setCategoryHandle={setCategoryHandle}
+            />
             <PageFooter/>
         </div>
     )
 }
 
-function PageHeader({user, setPageHandle, logOutHandle}){
+function PageHeader({userId, setPageHandle, logOutHandle}){
     return(
         <header className="header">
             <div className="logo" onClick={() => setPageHandle("main")}>
                 <h1>올빼미 서평</h1>
             </div>
-            {user ?
+            {userId ?
                 <div className="auth-buttons">
                     <button onClick={() => logOutHandle()} >로그아웃</button>
                     
@@ -66,13 +76,25 @@ function PageHeader({user, setPageHandle, logOutHandle}){
     )
 }
 
-function PageBody({page, category, bookId, user, setPageHandle}){
+function PageBody({page, category, bookId, userId, setPageHandle, setBookIdHandle, setCategoryHandle}){
     switch(page){
         case "main":
-            return <Home setPageHandle={setPageHandle}></Home>;
+            function setBook(bookId, page){
+                setPageHandle(page)
+                setBookIdHandle(bookId)
+            }
+            function setCategory(category, page){
+                setPageHandle(page)
+                setCategoryHandle(category)
+            }
+            return <Home 
+                    setPageHandle={setPageHandle}
+                    setBookIdHandle={setBook}
+                    setCategoryHandle={setCategory}>
+                </Home>;
         case "login":
             // 
-        case "book":
+        case "books":
         case "review":
     }
 }
