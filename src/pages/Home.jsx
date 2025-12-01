@@ -1,7 +1,10 @@
 import HomeCategory from "./components/HomeCategory";
 
-export default function Home(){
+export default function Home(props){
     return(
-        <HomeCategory/>
+        <div>
+            <button onClick={() => props.setPageHandle(2)}>2페이지로 이동</button>
+            <HomeCategory/>
+        </div>
     )
 }
