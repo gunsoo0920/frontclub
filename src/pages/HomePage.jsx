@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Home from "./Home";
 
 export default function HomePage(){
-    const [user, setUser] = useState("testUser");
-    const [page, setPage] = useState(1);
+    const [user, setUser] = useState("testuser");
+    const [page, setPage] = useState("main");
 
     const setUserHandle = (e) => {
         setUser(e.target.value);
@@ -13,28 +13,54 @@ export default function HomePage(){
         setPage(e)
     }
 
+    const logOutHandle = (e) => {
+        alert("로그아웃 되었습니다.");
+        setUser(null);
+        setPage("main");
+    } ;
+
+    const logInHandle = (e) =>{
+        setUser(e.target.value);
+        setPage("main");
+    }
+
     return(
         <div>
-            <PageHeader user={user}/>
+            <PageHeader user={user} setPageHandle={setPageHandle} logOutHandle={logOutHandle}/>
             <PageBody page={page} setPageHandle={setPageHandle} user={user}/>
             <PageFooter/>
         </div>
     )
 }
 
-function PageHeader({user}){
+function PageHeader({user, setPageHandle, logOutHandle}){
     return(
-        <div>
-            <h1>유저 확인</h1>
-            {user ? <h1>{user}</h1> : null}
-        </div>
+        <header className="header">
+            <div className="logo" onClick={() => setPageHandle("main")}>
+                <h1>올빼미 서평</h1>
+            </div>
+            {user ?
+                <div className="auth-buttons">
+                    <button onClick={() => logOutHandle()} >로그아웃</button>
+                    
+                </div> 
+                :
+                <div className="auth-buttons">
+                    <button onClick={() => setPageHandle("login")}>로그인</button>
+                    <button>회원가입</button>
+                </div> 
+            }
+        </header>
     )
 }
 
 function PageBody({page, setPageHandle}){
     switch(page){
-        case 1:
+        case "main":
             return <Home setPageHandle={setPageHandle}></Home>;
+        case "login":
+        case "book":
+        case "review":
     }
 }
 

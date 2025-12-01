@@ -21,7 +21,7 @@ export default function Home(props){
     return(
         <div>
             <HomeCategory books={selectCategory("DEV")} title="개발, 프로그래밍 장르"/>
-            <button onClick={() => props.setPageHandle(2)}>2페이지로 이동</button>
+            <button onClick={() => props.setPageHandle("review")}>리뷰 페이지</button>
         </div>
     )
 }
