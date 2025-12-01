@@ -1,5 +1,6 @@
 import HomeCategory from "./components/HomeCategory";
 import { useState, useEffect } from 'react';
+import './css/Home.css'
 
 export default function Home(props){
     const [books, setBooks] = useState([]);
@@ -19,10 +20,7 @@ export default function Home(props){
 
     return(
         <div>
-            <HomeCategory books={selectCategory("DEV")}/>
-            <HomeCategory books={selectCategory("AI")}/>
-            <HomeCategory books={selectCategory("SELF")}/>
-            <HomeCategory books={selectCategory("NOVEL")}/>
+            <HomeCategory books={selectCategory("DEV")} title="개발, 프로그래밍 장르"/>
             <button onClick={() => props.setPageHandle(2)}>2페이지로 이동</button>
         </div>
     )

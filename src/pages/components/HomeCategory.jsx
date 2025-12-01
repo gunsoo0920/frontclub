@@ -1,11 +1,28 @@
-export default function HomeCategory({books}){
+export default function HomeCategory({books, title}){
     return(
-         <ul>
+        <selection className="category-section">
+            <div className="section-header">
+                <h3>{title} &gt;</h3>
+                <p>관련된 설명을 적어주세요.</p>
+            </div>
+            <div className="item-list">
                 {books.map(book => (
-                    <li key={book.id}>
-                        {book.id}: {book.title} - {book.author}
-                    </li>
+                    <div key={book.id}>
+                        <img className="card-image" src={book.image_path} alt="" />
+                        <div className="card-info">
+                            <h4>{book.id}</h4>
+                            <p>{book.authors}</p>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
+        </selection>
+        //  <ul>
+        //         {books.map(book => (
+        //             <li key={book.id}>
+        //                 {book.id}: {book.title} - {book.author}
+        //             </li>
+        //         ))}
+        //     </ul>
     );
 }
