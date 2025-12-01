@@ -10,9 +10,19 @@ export default function Home(props){
         .catch(error => console.error("데이터 로드 실패:", error));
     }, []);
 
+    function selectCategory(category){
+        const selectBooks = books.filter(book => {
+            return book.category === category;
+        });
+        return selectBooks;
+    }
+
     return(
         <div>
-            <HomeCategory />
+            <HomeCategory books={selectCategory("DEV")}/>
+            <HomeCategory books={selectCategory("AI")}/>
+            <HomeCategory books={selectCategory("SELF")}/>
+            <HomeCategory books={selectCategory("NOVEL")}/>
             <button onClick={() => props.setPageHandle(2)}>2페이지로 이동</button>
         </div>
     )
