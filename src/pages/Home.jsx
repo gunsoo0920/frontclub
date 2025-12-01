@@ -1,10 +1,19 @@
 import HomeCategory from "./components/HomeCategory";
+import { useState, useEffect } from 'react';
 
 export default function Home(props){
+    const [books, setBooks] = useState([]);
+    useEffect(() => {
+    fetch('http://localhost:3001/books')
+        .then(response => response.json())
+        .then(data => setBooks(data))
+        .catch(error => console.error("데이터 로드 실패:", error));
+    }, []);
+
     return(
         <div>
+            <HomeCategory />
             <button onClick={() => props.setPageHandle(2)}>2페이지로 이동</button>
-            <HomeCategory/>
         </div>
     )
 }
