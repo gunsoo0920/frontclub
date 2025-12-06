@@ -1,6 +1,6 @@
-import HomeCategory from "./components/HomeCategory";
+import HomeCategory from "../components/HomeCategory"
 import { useState, useEffect } from 'react';
-import './css/Home.css'
+
 
 export default function Home(props){
     const [books, setBooks] = useState([]);

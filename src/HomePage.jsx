@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import Home from "./Home";
+import Home from "./pages/Home";
+import "./style/Home.css"
 
 export default function HomePage(){
     // 유저정보/String
