@@ -39,7 +39,7 @@ export default function HomePage(){
 
     return(
         <div>
-            <div>{page}{userId}{category}{bookId}</div>
+            <div>page:{page}, userId:{userId}, category: {category}, bookId : {bookId}</div>
             <PageHeader userId={userId} setPageHandle={setPageHandle} logOutHandle={logOutHandle}/>
             <PageBody 
                 page={page} 
