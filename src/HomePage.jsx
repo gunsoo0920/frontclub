@@ -19,8 +19,7 @@ export default function HomePage(){
     const bookCategory = {"DEV" : "개발, 프로그래밍", "AI" : "인공지능, 데이터 장르", "SELF" : " 자기계발, 공부법", 
         "NOVEL" : "소설, 에세이", "ESSAY" : "인문, 에세이" , "BIZ" : "경제, 경영, 스타트업", "KIDS" : " 유아, 아동" , "HOBBY": "취미, 라이프 스타일"}
     
-    
-    
+
     // 유저정보/String
     const [userId, setUser] = useState("testuser");
     // 페이지 정보(main, review, login 등등) / String
@@ -32,17 +31,7 @@ export default function HomePage(){
 
 
 
-    const setPageHandle = (e) => {
-        setPage(e)
-    }
-
-    const setCategoryHandle = (e) => {
-        setCategory(e)
-    }
     
-    const setBookIdHandle = (e) => {
-        setBookId(e)
-    }
 
     // 로그아웃용
     const logOutHandle = (e) => {
@@ -57,14 +46,18 @@ export default function HomePage(){
         setPage("main");
     }
 
+    const setPageHandle = (e) => {
+        setPage(e)
+    }
+    
     function setBook(bookId, page){
-        setPageHandle(page)
-        setBookIdHandle(bookId)
+        setPage(page)
+        setBookId(bookId)
     }
 
     function set_Category(category, page){
-        setPageHandle(page)
-        setCategoryHandle(category)
+        setPage(page)
+        setCategory(category)
     }
 
 
@@ -85,7 +78,7 @@ export default function HomePage(){
 
     return(
         <div>
-            <div>page:{page}, userId:{userId}, category: {category}, bookId : {bookId}</div>
+            <div>page:{page || "NONE"} / userId:{userId  || "NONE"} / category: {category  || "NONE"} / bookId : {bookId  || "NONE"}</div>
             <PageHeader userId={userId} setPageHandle={setPageHandle} logOutHandle={logOutHandle}/>
 
             {pages[page]() || <div>error</div>}
