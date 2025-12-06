@@ -1,10 +1,26 @@
 import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import BookListPage from "./pages/BookListPage";
+import KidsPage from "./pages/books/KidsPage";
+import EssayPage from "./pages/books/EssayPage";
+import HobbyPage from "./pages/books/HobbyPage";
+import DevPage from "./pages/books/DevPage";
 
 function App() {
   return (
-    <div className="App">
-      <h1>FrontClub Project</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* 전체 리스트 */}
+        <Route path="/" element={<BookListPage />} />
+
+        {/* 개별 */}
+        <Route path="/books/kids" element={<KidsPage />} />
+        <Route path="/books/essay" element={<EssayPage />} />
+        <Route path="/books/hobby" element={<HobbyPage />} />
+        <Route path="/books/dev" element={<DevPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
