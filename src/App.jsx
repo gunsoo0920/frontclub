@@ -7,6 +7,7 @@ import EssayPage from "./pages/books/EssayPage";
 import HobbyPage from "./pages/books/HobbyPage";
 import DevPage from "./pages/books/DevPage";
 
+// NOTE: 임시 테스트용 Route
 function App() {
   return (
     <BrowserRouter>
