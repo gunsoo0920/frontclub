@@ -86,7 +86,7 @@ const BookListPage = ({
         - 메인페이지에서 메뉴 section으로 대체해야 함 
       */}
       <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-        <Link to="/"><button>전체</button></Link>
+        <Link to="/books"><button>전체</button></Link>
         <Link to="/books/kids"><button>유아/아동</button></Link>
         <Link to="/books/essay"><button>에세이</button></Link>
         <Link to="/books/hobby"><button>취미</button></Link>

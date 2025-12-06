@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* 전체 리스트 */}
-        <Route path="/" element={<BookListPage />} />
+        <Route path="/books" element={<BookListPage />} />
 
         {/* 개별 */}
         <Route path="/books/kids" element={<KidsPage />} />
