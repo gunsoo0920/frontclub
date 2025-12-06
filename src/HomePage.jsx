@@ -82,7 +82,6 @@ export default function HomePage(){
             <PageHeader userId={userId} setPageHandle={setPageHandle} logOutHandle={logOutHandle}/>
 
             {pages[page]() || <div>error</div>}
-    
             <PageFooter/>
         </div>
     )
