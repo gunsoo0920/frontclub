@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import BookListPage from "./pages/BookListPage";
+import BookListPage from "./pages/books/BookListPage";
 import KidsPage from "./pages/books/KidsPage";
 import EssayPage from "./pages/books/EssayPage";
 import HobbyPage from "./pages/books/HobbyPage";
