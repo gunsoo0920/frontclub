@@ -9,12 +9,12 @@
 
 import React from 'react';
 import '../css/booklist.css';
+import { Link } from "react-router-dom";
 
-const BookCard = ({ book }) => {
+const BookCard = ({book}) => {
 
     // 구조 분해
-    const { title, authors, image_path, category } = book;
-
+    const {title, authors, image_path, category} = book;
 
     /** NOTE:
     * 현재 댓글 기능이 json-server에 없으므로 임시값 사용 중
@@ -24,19 +24,18 @@ const BookCard = ({ book }) => {
     */
     const reviewCount = book.reviewCount || 9;
 
-
     /**
      * 제목 글자수 제한
      * - 책 제목이 너무 길어지면 UI깨짐 방지
      */
     const truncateTitle = (text, maxLength) => {
-        if (text.length > maxLength) return text.substring(0, maxLength) + '...';
+        if (text.length > maxLength) 
+            return text.substring(0, maxLength) + '...';
         return text;
     };
 
     // UI용 제목
     const displayTitle = truncateTitle(title, 20);
-
 
     /**
      * 카테고리 영문을 한국어 태그로 변환
@@ -56,38 +55,42 @@ const BookCard = ({ book }) => {
         return names[code] || '일반';
     };
 
-
     return (
-        <div className="book-card">
+        <Link
+            to={`/books/${book.id}`}
+            style={{
+                textDecoration: "none",
+                color: "inherit"
+            }}>
+            <div className="book-card">
 
-            {/* ----- 썸네일 ----- */}
-            <div className="card-image-wrapper">
-                <img src={image_path} alt={title} className="book-image" />
-
-                {/* ----- 이미지 태그 (카테고리 + 신간) ----- */}
-                <div className="tag-list">
-                    <span className="tag highlight">{getCategoryName(category)}</span>
-                    <span className="tag new">신간</span>
-                </div>
-            </div>
-
-
-            {/* ----- 도서정보 영역 ----- */}
-            <div className="book-info">
-
-                {/* 제목 */}
-                <h3 className="book-title">{displayTitle}</h3>
-
-                <div className='border-bottom'></div>
-
-                {/* 저자 + 서평 */}
-                <div className="book-meta">
-                    <span className="book-author">{authors}</span>
-                    <span className="review-count">서평 {reviewCount}건</span>
+                {/* ----- 썸네일 ----- */}
+                <div className="card-image-wrapper">
+                    <img src={image_path} alt={title} className="book-image"/> {/* ----- 이미지 태그 (카테고리 + 신간) ----- */}
+                    <div className="tag-list">
+                        <span className="tag highlight">{getCategoryName(category)}</span>
+                        <span className="tag new">신간</span>
+                    </div>
                 </div>
 
+                {/* ----- 도서정보 영역 ----- */}
+                <div className="book-info">
+
+                    {/* 제목 */}
+                    <h3 className="book-title">{displayTitle}</h3>
+
+                    <div className='border-bottom'></div>
+
+                    {/* 저자 + 서평 */}
+                    <div className="book-meta">
+                        <span className="book-author">{authors}</span>
+                        <span className="review-count">서평 {reviewCount}건</span>
+                    </div>
+
+                </div>
+
             </div>
-        </div>
+        </Link>
     );
 };
 

@@ -6,6 +6,8 @@ import KidsPage from "./pages/books/KidsPage";
 import EssayPage from "./pages/books/EssayPage";
 import HobbyPage from "./pages/books/HobbyPage";
 import DevPage from "./pages/books/DevPage";
+import Detail from "./pages/detail/Detail";
+
 
 // NOTE: 임시 테스트용 Route
 function App() {
@@ -14,6 +16,8 @@ function App() {
       <Routes>
         {/* 전체 리스트 */}
         <Route path="/books" element={<BookListPage />} />
+          {/* 상세 페이지 */}
+        <Route path="/books/:id" element={<Detail />} />
 
         {/* 개별 */}
         <Route path="/books/kids" element={<KidsPage />} />
