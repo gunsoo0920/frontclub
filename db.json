@@ -2431,10 +2431,10 @@
   ],
   "users": [
     {
-      "id": "9adf",
-      "email": "SonKkim@naver.com",
-      "username": "손끼임",
-      "password": "1234"
+      "id": "0910",
+      "user_id": "gunsoo0920@naver.com",
+      "user_name": "임건수",
+      "user_pw": "1234"
     }
   ],
   "reviews": []

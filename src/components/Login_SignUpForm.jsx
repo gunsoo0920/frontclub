@@ -4,12 +4,12 @@ import Login_SignUpSuccessModal from "./Login_SignUpSuccessModal";
 
 export default function Login_SignUpForm() {
   const [form, setForm] = useState({
-    email: "",
-    username: "",
-    password: "",
+    user_id: "",
+    user_name: "",
+    user_pw: "",
   });
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false); // alert이 아닌 모달로 이쁘게 나오게 하려고했음
   const [userName, setUserName] = useState("");
 
   const handleChange = (e) => {
@@ -17,33 +17,33 @@ export default function Login_SignUpForm() {
   };
 
   const handleSignUp = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // 새로고침 방지
 
     const exists = await axios.get(
-      `http://localhost:4000/users?email=${form.email}`
+      `http://localhost:3001/users?user_id=${form.user_id}`
     );
 
     if (exists.data.length > 0) {
-      alert("이미 존재하는 이메일입니다.");
+      alert("이미 존재하는 아이디입니다.");
       return;
     }
 
     // DB 저장
-    await axios.post("http://localhost:4000/users", form);
+    await axios.post("http://localhost:3001/users", form);
 
     // 성공 모달 띄우기
-    setUserName(form.username);
+    setUserName(form.user_name);
     setShowModal(true);
   };
 
   return (
     <>
       <form className="auth-form" onSubmit={handleSignUp}>
-        <input name="email" placeholder="이메일" onChange={handleChange} />
-        <input name="username" placeholder="이름" onChange={handleChange} />
+        <input name="user_id" placeholder="이메일" onChange={handleChange} />
+        <input name="user_name" placeholder="이름" onChange={handleChange} />
         <input
           type="password"
-          name="password"
+          name="user_pw"
           placeholder="비밀번호"
           onChange={handleChange}
         />

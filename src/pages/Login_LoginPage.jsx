@@ -8,11 +8,6 @@ export default function LoginPage() {
       <div className="auth-box">
         <h2>로그인 / 회원가입</h2>
 
-        {/* 소셜 로그인 */}
-        <button className="kakao-btn">카카오 계정으로 시작</button>
-        <button className="naver-btn">네이버 계정으로 시작</button>
-        <button className="google-btn">구글 계정으로 시작</button>
-
         <hr />
 
         <Login_LoginForm />
