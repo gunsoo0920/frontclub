@@ -1,0 +1,184 @@
+/* ================================
+   Detail Page Layout
+================================ */
+.detail-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+}
+
+/* 책 제목 */
+.detail-container h2 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* 책 이미지 */
+.detail-image {
+    width: 260px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 4px 6px 16px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* 책 정보 텍스트 */
+.detail-container p {
+    font-size: 15px;
+    margin: 6px 0;
+    color: #555;
+    font-weight: 500;
+}
+
+/* 구분선 */
+.detail-container hr {
+    margin: 30px 0;
+    border: none;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* =======================================
+   후기 작성 영역
+======================================= */
+.review-section h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.review-write-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.review-write-box textarea {
+    width: 100%;
+    min-height: 90px;
+    resize: none;
+    padding: 14px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+}
+
+.review-write-box button {
+    width: 140px;
+    padding: 10px 0;
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    align-self: flex-end;
+}
+
+.review-write-box button:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+}
+
+/* =======================================
+   후기 리스트
+======================================= */
+.review-item {
+    background-color: #fffdfd;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 18px;
+    border: 1px solid #f0dcdc;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+}
+
+.review-user {
+    font-size: 14px;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+.review-content {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    color: #555;
+}
+
+/* 수정 중 textarea */
+.review-item textarea {
+    width: 100%;
+    min-height: 70px;
+    font-size: 14px;
+    padding: 10px;
+    resize: none;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    font-family: inherit;
+}
+
+/* 수정/삭제 버튼 */
+.review-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.review-buttons button {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* 수정 버튼 */
+.review-buttons button:nth-child(1) {
+    background-color: #ffe08a;
+}
+
+.review-buttons button:nth-child(1):hover {
+    background-color: #ffcf48;
+}
+
+/* 삭제 버튼 */
+.review-buttons button:nth-child(2) {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.review-buttons button:nth-child(2):hover {
+    background-color: #ff5252;
+}
+
+/* =======================================
+   반응형
+======================================= */
+
+@media (max-width: 768px) {
+    .detail-image {
+        width: 200px;
+    }
+
+    .detail-container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .detail-image {
+        width: 160px;
+    }
+
+    .detail-container h2 {
+        font-size: 20px;
+    }
+}
