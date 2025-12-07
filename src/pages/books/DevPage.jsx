@@ -1,6 +1,6 @@
 // /books/dev 전용 개별 페이지
 // BookListPage에 props 전달해서 UI만 다르게 사용
-import BookListPage from "../BookListPage";
+import BookListPage from "./BookListPage";
 
 /**
  * 개발/IT 전용 리스트 페이지

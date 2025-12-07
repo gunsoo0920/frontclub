@@ -8,8 +8,8 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import BookCard from '../components/BookCard';
-import '../css/booklist.css';
+import BookCard from '../../components/BookCard';
+import '../../css/booklist.css';
 import { Link } from "react-router-dom";
 
 const BookListPage = ({

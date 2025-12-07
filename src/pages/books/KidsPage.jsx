@@ -1,4 +1,4 @@
-import BookListPage from "../BookListPage";
+import BookListPage from "./BookListPage";
 
 /**
  * KIDS 전용 페이지
