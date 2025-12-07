@@ -84,14 +84,3 @@ localStorage.removeItem("sessionUser");
 ```bash
 json-server --watch db.json --port 4000
 ```
-
----
-
-## ✔ 요약
-
-- 폴더는 components / pages / css 로 구분
-- 로그인/회원가입은 Axios + JSON Server 기반
-- **localStorage로 세션 상태를 유지하는 간단한 방식 사용**
-- 모든 기능은 팀원이 쉽게 이해할 수 있도록 주석 처리됨
-
----
