@@ -12,12 +12,12 @@ const Detail = () => {
   const [newReview, setNewReview] = useState("");
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editingContent, setEditingContent] = useState("");
-
-
-  // ⭐ 나의 리뷰만 따로 저장할 state
   const [myReviews, setMyReviews] = useState([]);
 
-  // 로그인 유저 확인
+  // ⭐ 오른쪽 사이드바에서 리뷰 작성 창을 띄우기 위한 state
+  const [showRightReviewBox, setShowRightReviewBox] = useState(false);
+
+  // 로그인 정보
   const user = JSON.parse(localStorage.getItem("user"));
 
   /* ---------------------------
@@ -41,8 +41,7 @@ const Detail = () => {
   }, [id]);
 
   /* ---------------------------
-      ⭐ 리뷰가 바뀔 때마다 
-      “내가 쓴 리뷰만” 필터링
+      ⭐ 내가 쓴 리뷰만 필터링
   ---------------------------- */
   useEffect(() => {
     if (user) {
@@ -53,7 +52,7 @@ const Detail = () => {
   if (!book) return <div>📚 책 정보를 불러오는 중...</div>;
 
   /* ---------------------------
-      ✏️ 리뷰 작성 (POST)
+      ✏️ 후기 작성 (POST)
   --------------------------- */
   const handleCreateReview = () => {
     if (!newReview.trim()) return alert("내용을 입력해주세요.");
@@ -62,7 +61,7 @@ const Detail = () => {
     const reviewData = {
       bookId: Number(id),
       userId: user.id,
-      userName: user.name,
+      userName: user.user_name,
       content: newReview,
       createdAt: Date.now(),
     };
@@ -76,6 +75,7 @@ const Detail = () => {
       .then((data) => {
         setReviews((prev) => [...prev, data]);
         setNewReview("");
+        setShowRightReviewBox(false); // 작성 후 사이드 박스 닫기
       })
       .catch((err) => console.error("리뷰 작성 실패:", err));
   };
@@ -127,8 +127,6 @@ const Detail = () => {
       <div className="detail-layout">
         {/* ============ LEFT ============ */}
         <div className="detail-left">
-
-          {/* 헤더 */}
           <div className="book-header-box">
             <h2 className="book-header-title">{book.title}</h2>
             <p className="book-header-sub">
@@ -148,7 +146,7 @@ const Detail = () => {
             </div>
           </section>
 
-          {/* -------- 나의 리뷰 영역 -------- */}
+          {/* -------- 나의 리뷰 -------- */}
           <section className="my-review-section">
             <h3>⭐ 나의 리뷰</h3>
 
@@ -158,7 +156,6 @@ const Detail = () => {
 
             {myReviews.map((review) => (
               <div key={review.id} className="review-card my-review-card">
-
                 <div className="review-card-header">
                   <strong>{review.userName}</strong>
                   <span className="review-date">
@@ -193,27 +190,7 @@ const Detail = () => {
             ))}
           </section>
 
-          {/* -------- 후기 작성 -------- */}
-          <section className="review-write-section">
-            <h3>✏️ 후기 작성</h3>
-
-            {!user && <p className="login-warn">로그인 후 작성 가능합니다.</p>}
-
-            {user && (
-              <div className="review-write-box">
-                <textarea
-                  value={newReview}
-                  onChange={(e) => setNewReview(e.target.value)}
-                  placeholder="후기를 입력하세요..."
-                ></textarea>
-                <button onClick={handleCreateReview} className="write-btn">
-                  작성하기
-                </button>
-              </div>
-            )}
-          </section>
-
-          {/* -------- 전체 후기 리스트 -------- */}
+          {/* -------- 전체 후기 -------- */}
           <section className="review-list-section">
             <h3>📝 후기 목록 ({reviews.length})</h3>
 
@@ -269,8 +246,31 @@ const Detail = () => {
           </div>
 
           <div className="side-buttons">
-            <button className="btn-yellow">도서 리뷰 작성</button>
+            <button
+              className="btn-yellow"
+              onClick={() => setShowRightReviewBox(!showRightReviewBox)}
+            >
+              도서 리뷰 작성
+            </button>
           </div>
+
+          {/* 🔥 오른쪽 리뷰 작성 UI */}
+          {showRightReviewBox && user && (
+            <div className="right-review-box">
+              <textarea
+                value={newReview}
+                onChange={(e) => setNewReview(e.target.value)}
+                placeholder="후기를 입력하세요..."
+              />
+              <button className="write-btn" onClick={handleCreateReview}>
+                작성하기
+              </button>
+            </div>
+          )}
+
+          {!user && showRightReviewBox && (
+            <p className="login-warn">로그인 후 작성 가능합니다.</p>
+          )}
         </aside>
       </div>
     </div>

@@ -24,7 +24,7 @@ export default function Login_SignUpForm() {
     );
 
     if (exists.data.length > 0) {
-      alert("이미 존재하는 아이디입니다.");
+      alert("정보를 입력해 주세요.");
       return;
     }
 

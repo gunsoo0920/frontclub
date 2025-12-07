@@ -1,233 +1,264 @@
-/* 전체 래퍼 */
+/* ===========================
+   전체 레이아웃
+=========================== */
 .detail-wrapper {
-  width: 1200px;
-  margin: 40px auto;
-  font-family: "Noto Sans KR", sans-serif;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  background: #fafafa;
 }
 
-/* 2단 레이아웃 */
 .detail-layout {
   display: flex;
   gap: 40px;
+  width: 1200px;
 }
 
-/* ------------------ */
-/* LEFT SIDE CONTENT  */
-/* ------------------ */
+/* ===========================
+   LEFT 영역
+=========================== */
 .detail-left {
-  flex: 1.4;
+  flex: 3;
 }
 
-/* 상단 헤더 박스 */
+/* 책 제목 박스 */
 .book-header-box {
-  background: linear-gradient(to right, #6ea8ff, #76c0ff);
+  background: #fff;
   padding: 18px 22px;
   border-radius: 10px;
-  color: white;
-  margin-bottom: 25px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+  margin-bottom: 22px;
 }
 
 .book-header-title {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0;
 }
 
 .book-header-sub {
-  font-size: 13px;
+  margin-top: 6px;
+  color: #777;
+  font-size: 14px;
 }
 
-/* 도서 정보 박스 */
+/* 도서 정보 */
 .info-section {
   background: #fff;
-  border: 1px solid #ddd;
-  padding: 18px;
+  padding: 20px;
   border-radius: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
 }
 
-.info-section h3 {
-  margin-bottom: 14px;
-  font-size: 18px;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  row-gap: 10px;
+.info-grid div {
+  margin-bottom: 8px;
   font-size: 14px;
 }
 
 .info-grid span {
   font-weight: 700;
-  color: #000;
+  margin-right: 6px;
 }
 
-/* 도서 리뷰 안내 */
-.review-guide-section {
-  background: #e5f4ff;
+/* ===========================
+   "나의 리뷰"
+=========================== */
+.my-review-section {
+  background: white;
+  padding: 20px;
   border-radius: 10px;
-  padding: 18px;
-  border: 1px solid #c9e8ff;
-  margin-bottom: 25px;
+  margin-bottom: 22px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
 }
 
-.review-guide-section h3 {
-  margin-bottom: 10px;
-}
-
-.review-guide-content {
-  line-height: 1.6;
+.no-my-review {
+  color: #999;
   font-size: 14px;
-  color: #444;
 }
 
-/* 후기 작성 */
-.review-write-section h3 {
-  margin-bottom: 10px;
-}
-
-.review-write-box textarea {
-  width: 100%;
-  height: 120px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px;
-}
-
-.write-btn {
-  margin-top: 10px;
-  padding: 10px 16px;
-  background: #ff6b6b;
-  border: none;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-/* 후기 리스트 */
-.review-list-section h3 {
-  margin: 20px 0;
-}
-
+/* ===========================
+   리뷰 카드 공통
+=========================== */
 .review-card {
   background: #fff;
-  border: 1px solid #eee;
-  padding: 14px;
-  border-radius: 8px;
-  margin-bottom: 12px;
+  padding: 15px 18px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border-left: 4px solid #ffd500;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .review-card-header {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
   margin-bottom: 8px;
 }
 
+.review-date {
+  font-size: 12px;
+  color: #777;
+}
+
 .review-text {
-  line-height: 1.6;
+  font-size: 14px;
   margin-bottom: 12px;
+  line-height: 1.5;
 }
 
-.review-action {
-  display: flex;
-  gap: 10px;
-}
-
+/* 수정/삭제 버튼 */
 .review-action button {
-  padding: 6px 10px;
-  border-radius: 6px;
+  margin-right: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  background: #ffe680;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-
-/* ------------------ */
-/* RIGHT SIDE CARD    */
-/* ------------------ */
-.detail-right {
-  flex: 0.6;
-  background: #fff;
+.review-action button:hover {
+  background: #ffdf3d;
 }
 
-.detail-cover-box {
+/* 리뷰 수정 textarea */
+.review-edit-block textarea {
   width: 100%;
-  text-align: center;
-  background: #fef6f6;
+  min-height: 80px;
+  margin-bottom: 8px;
+}
+
+/* 수정 완료 / 취소 버튼 */
+.review-edit-btns button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.review-edit-btns button:first-child {
+  background: #ffd500;
+}
+.review-edit-btns button:last-child {
+  background: #ddd;
+}
+
+/* ===========================
+   리뷰 작성 영역 (왼쪽)
+=========================== */
+.review-write-section {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 22px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+.review-write-box textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+.write-btn {
+  background: #ffd500;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.write-btn:hover {
+  background: #ffcf00;
+}
+
+/* ===========================
+   RIGHT 영역 (표지 + 요약)
+=========================== */
+.detail-right {
+  flex: 1.3;
+  background: #ffffff;
   padding: 20px;
   border-radius: 12px;
-  margin-bottom: 20px;
+  height: fit-content;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+  position: relative;
 }
 
+/* 표지 이미지 */
 .cover-img {
-  width: 65%;
+  width: 100%;
   border-radius: 8px;
+  margin-bottom: 16px;
 }
 
 .side-title {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .side-author {
-  font-size: 14px;
-  color: #666;
+  margin: 4px 0 12px;
+  color: #555;
 }
 
 .side-info p {
-  margin: 5px 0;
-  font-size: 14px;
+  margin: 4px 0;
 }
 
-.side-buttons {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.btn-red {
-  background: #ff6b6b;
-  padding: 12px;
-  border-radius: 8px;
-  color: white;
-  border: none;
-}
-
-.btn-purple {
-  background: #6b6bff;
-  padding: 12px;
-  border-radius: 8px;
-  color: white;
-  border: none;
-}
-
+/* 버튼 */
 .btn-yellow {
-  background: #ffc45b;
-  padding: 12px;
-  border-radius: 8px;
+  width: 100%;
+  padding: 14px;
+  background: #ffd500;
   border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 16px;
 }
 
-.my-review-section {
-  background: #fff4d0;
-  border: 1px solid #ffd98a;
+.btn-yellow:hover {
+  background: #ffcf00;
+}
+
+/* ===========================
+   🔥 오른쪽 리뷰 작성 박스
+=========================== */
+.right-review-box {
+  margin-top: 18px;
+  background: #fff8c9;
   padding: 18px;
   border-radius: 10px;
-  margin-bottom: 25px;
+  border-left: 4px solid #ffd500;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  animation: slideDown 0.28s ease-out;
 }
 
-.my-review-section h3 {
+.right-review-box textarea {
+  width: 100%;
+  min-height: 90px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 10px;
   margin-bottom: 12px;
-  font-size: 18px;
 }
 
-.my-review-card {
-  background: #fffefa;
-  border: 1px solid #ffe7b3;
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.no-my-review {
-  color: #777;
-  font-size: 14px;
+/* 로그인 필요 메시지 */
+.login-warn {
+  font-size: 13px;
+  color: #d9534f;
+  margin-top: 10px;
 }

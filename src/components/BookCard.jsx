@@ -6,30 +6,27 @@
  *  - 이미지, 제목, 저자, 서평수, 카테고리 태그 포함
  *  - BookListPage에서 map으로 반복 렌더링
  */
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/booklist.css';
 import { Link } from "react-router-dom";
 
-const BookCard = ({book}) => {
+//  API 주소 추가
+const API = "http://localhost:3001";
+
+const BookCard = ({ book }) => {
+
+    //댓글 카운트
+    const [reviewCount, setReviewCount] = useState(0);
 
     // 구조 분해
-    const {title, authors, image_path, category} = book;
-
-    /** NOTE:
-    * 현재 댓글 기능이 json-server에 없으므로 임시값 사용 중
-    * 나중에 댓글 기능 구현 시:
-    *   - GET /comments?bookId={id}
-    *   - 길이(length)로 reviewCount 계산하여 표시 예정
-    */
-    const reviewCount = book.reviewCount || 9;
+    const { title, authors, image_path, category } = book;
 
     /**
      * 제목 글자수 제한
      * - 책 제목이 너무 길어지면 UI깨짐 방지
      */
     const truncateTitle = (text, maxLength) => {
-        if (text.length > maxLength) 
+        if (text.length > maxLength)
             return text.substring(0, maxLength) + '...';
         return text;
     };
@@ -55,6 +52,14 @@ const BookCard = ({book}) => {
         return names[code] || '일반';
     };
 
+    //  댓글 개수 불러오기
+    useEffect(() => {
+        fetch(`${API}/reviews?bookId=${book.id}`)
+            .then(res => res.json())
+            .then(data => setReviewCount(data.length))
+            .catch(err => console.error("리뷰 개수 로드 실패:", err));
+    }, [book.id]);
+
     return (
         <Link
             to={`/books/${book.id}`}
@@ -66,7 +71,7 @@ const BookCard = ({book}) => {
 
                 {/* ----- 썸네일 ----- */}
                 <div className="card-image-wrapper">
-                    <img src={image_path} alt={title} className="book-image"/> {/* ----- 이미지 태그 (카테고리 + 신간) ----- */}
+                    <img src={image_path} alt={title} className="book-image" />
                     <div className="tag-list">
                         <span className="tag highlight">{getCategoryName(category)}</span>
                         <span className="tag new">신간</span>
