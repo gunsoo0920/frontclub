@@ -1,0 +1,152 @@
+/* 전체 로그인/회원가입 페이지 정렬 */
+.auth-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+}
+
+/* 로그인 박스 */
+.auth-box {
+  width: 360px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* 제목 */
+.auth-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* 구분선 */
+.auth-divider {
+  margin: 18px 0;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/* 🔥 공통 버튼 스타일 (width 100% 일관성 확보) */
+.kakao-btn,
+.naver-btn,
+.google-btn,
+.login-btn,
+.signup-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  box-sizing: border-box; /* 🔥 버튼 너비 정확히 동일하도록 */
+  font-size: 15px;
+}
+
+/* 카카오 버튼 */
+.kakao-btn {
+  background: #fee500;
+}
+
+/* 네이버 버튼 */
+.naver-btn {
+  background: #03c75a;
+  color: white;
+}
+
+/* 구글 버튼 */
+.google-btn {
+  background: white;
+  border: 1px solid #ccc;
+}
+
+/* 로그인 / 회원가입 버튼 */
+.login-btn {
+  background: #ff6a6a;
+  color: white;
+}
+.signup-btn {
+  background: #ff6a6a;
+  color: white;
+}
+
+/* 🔥 input 스타일 (버튼과 동일한 width 적용) */
+.auth-form input {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box; /* 🔥 버튼과 width 완전 일치 */
+  font-size: 15px;
+  outline: none;
+}
+
+/* 하단 텍스트 */
+.auth-bottom {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-bottom a {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+/* 🔥 모달 전체 화면 배경 */
+.login-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* 🔥 모달 박스 */
+.login-modal-box {
+  width: 320px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+/* 모달 애니메이션 */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-close-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 10px;
+  background: #ff6a6a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}

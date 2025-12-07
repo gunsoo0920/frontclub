@@ -1,11 +1,17 @@
-import "./App.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login_LoginPage from "./pages/Login_LoginPage";
+import Login_SignUpPage from "./pages/Login_SignPage";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <h1>FrontClub Project</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* 처음 실행 → /login 으로 강제 이동 */}
+        <Route path="/" element={<Navigate to="/login" />} />
+
+        <Route path="/login" element={<Login_LoginPage />} />
+        <Route path="/signup" element={<Login_SignUpPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
