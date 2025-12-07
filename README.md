@@ -12,7 +12,7 @@ src/
  ├ components/
  │   ├ Login_LoginForm.jsx
  │   ├ Login_SignUpForm.jsx
- │   ├ LoginSuccessModal.jsx
+ │   ├ Login_LoginSuccessModal.jsx
  │   └ Login_SignUpSuccessModal.jsx
  │
  ├ pages/
