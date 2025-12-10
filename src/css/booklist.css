@@ -263,6 +263,24 @@
     cursor: pointer;
 }
 
+.search-wrapper {
+  display: flex;
+  margin: 20px 0;
+}
+
+.search-input {
+  width: 350px;
+  padding: 12px 16px;
+  font-size: 15px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, .08);
+
+  transition: all 0.2s;
+}
+
+
+
 /* 반응형 처리 */
 @media (max-width: 1024px) {
     .book-grid {
