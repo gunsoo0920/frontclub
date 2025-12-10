@@ -1,127 +1,118 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import '../css/Home.css'; // CSS 파일이 index.js나 App.js에 포함되어 있다면 생략 가능
+// 위에서 작성한 CSS 파일을 import 하세요 (경로에 맞게 수정)
+import '../css/HomeSlider.css'; 
 
-// 슬라이더에 들어갈 데이터 (이미지 3개)
+// 이미지 import
+import sliderImg1 from '../assets/images/slider1.png';
+import sliderImg2 from '../assets/images/slider2.png';
+import sliderImg3 from '../assets/images/slider3.png';
+
 const slidesData = [
   {
     id: 1,
-    imageUrl: "https://via.placeholder.com/1200x400/ffcccc/333333?text=첫번째+슬라이드+-+소장도서관+조회",
-    tabTitle: "slider1",
-    bgColor: "#fff5e6" 
+    imageSrc: sliderImg1,
+    tabTitle: "올빼미 서평",
+    bgColor: "#fff5e6" // 필요 없다면 제거 가능
   },
   {
     id: 2,
-    imageUrl: "https://via.placeholder.com/1200x400/ccffcc/333333?text=두번째+슬라이드+-+그림책+교육자료",
-    tabTitle: "slider2",
+    imageSrc: sliderImg2,
+    tabTitle: "책 일기",
     bgColor: "#e6ffe6"
   },
   {
     id: 3,
-    imageUrl: "https://via.placeholder.com/1200x400/ccccff/333333?text=세번째+슬라이드+-+그림책+서평+OST",
-    tabTitle: "slider3",
+    imageSrc: sliderImg3,
+    tabTitle: "서평 남기기",
     bgColor: "#e6e6ff"
   }
 ];
 
 export default function HomeSlider() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const timerRef = useRef(null); 
+  const [currentIndex, setCurrentIndex] = useState(0); // 현재 슬라이드 인덱스 (0부터 시작)
+  const [isPlaying, setIsPlaying] = useState(true);    // 자동 재생 여부
 
-  // 다음 슬라이드로 이동
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % slidesData.length);
-  };
+  // 자동 슬라이드 기능
+  useEffect(() => {
+    let interval;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => 
+          prevIndex === slidesData.length - 1 ? 0 : prevIndex + 1
+        );
+      }, 5000); 
+    }
+    return () => clearInterval(interval); // 컴포넌트가 사라지거나 멈출 때 타이머 해제
+  }, [isPlaying]);
 
   // 이전 슬라이드로 이동
-  const goToPrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + slidesData.length) % slidesData.length);
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? slidesData.length - 1 : prevIndex - 1
+    );
   };
 
-  // 특정 슬라이드로 이동 (탭 클릭 시)
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
+  // 다음 슬라이드로 이동
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === slidesData.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
-  // 재생/정지 토글
+  // 재생/일시정지 토글
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
 
-  // 자동 재생 로직
-  useEffect(() => {
-    if (isPlaying) {
-      timerRef.current = setInterval(goToNext, 3000);
-    } else {
-      clearInterval(timerRef.current);
-    }
-    return () => clearInterval(timerRef.current);
-  }, [isPlaying]); 
+  // 탭 클릭 시 해당 슬라이드로 이동
+  const handleTabClick = (index) => {
+    setCurrentIndex(index);
+    // 탭을 직접 클릭하면 자동 재생을 잠시 멈추고 싶다면 아래 주석 해제
+    // setIsPlaying(false); 
+  };
 
   return (
-    <section className="home-slider-section">
-      {/* (수정) slider-container -> home-main-slider-container (책 목록과 구분) */}
-      <div className="home-main-slider-container">
+    <div className="slider-container">
+      {/* 1. 이미지 표시 영역 */}
+      <img 
+        src={slidesData[currentIndex].imageSrc} 
+        alt={slidesData[currentIndex].tabTitle} 
+        className="slide-image"
+      />
+
+      {/* 2. 하단 컨트롤러 및 탭 래퍼 */}
+      <div className="slider-controls-wrapper">
         
-        {/* (수정) slider-wrapper -> home-slider-wrapper */}
-        <div 
-          className="home-slider-wrapper" 
-          style={{ 
-            transform: `translateX(-${currentIndex * 100}%)`,
-            width: `${slidesData.length * 100}%` 
-          }}
-        >
+        {/* 왼쪽: 컨트롤 박스 (페이지 번호, 화살표, 일시정지) */}
+        <div className="control-box">
+          <span className="page-info">
+            {currentIndex + 1} / {slidesData.length}
+          </span>
+          <button className="control-btn" onClick={handlePrev}>
+            &lt; {/* 왼쪽 화살표 */}
+          </button>
+          <button className="control-btn" onClick={togglePlay}>
+            {isPlaying ? '||' : '▶'} {/* 일시정지/재생 아이콘 */}
+          </button>
+          <button className="control-btn" onClick={handleNext}>
+            &gt; {/* 오른쪽 화살표 */}
+          </button>
+        </div>
+
+        {/* 오른쪽: 탭 버튼 (올빼미 서평, 책 일기 등) */}
+        <div className="tabs-box">
           {slidesData.map((slide, index) => (
-            <div 
-              key={slide.id} 
-              // (수정) slide -> home-slide
-              className="home-slide" 
-              style={{ 
-                width: `${100 / slidesData.length}%`, 
-                backgroundColor: slide.bgColor 
-              }}
+            <button
+              key={slide.id}
+              className={`tab-btn ${currentIndex === index ? 'active' : ''}`}
+              onClick={() => handleTabClick(index)}
             >
-              {/* (수정) slide-image -> home-slide-image */}
-              <div className="home-slide-image" style={{ backgroundImage: `url(${slide.imageUrl})` }}>
-              </div>
-            </div>
+              {slide.tabTitle}
+            </button>
           ))}
         </div>
 
-        {/* 하단 컨트롤바 & 탭 메뉴 영역 */}
-        <div className="home-slider-controls-wrapper">
-          <div className="home-slider-controls">
-            
-            {/* 왼쪽 네비게이션 바 */}
-            <div className="home-nav-bar">
-              <span className="home-page-info">{currentIndex + 1} / {slidesData.length}</span>
-              
-              <button onClick={goToPrev} className="home-nav-arrow left">&lt;</button>
-              
-              <button onClick={togglePlay} className="home-play-pause-btn">
-                {isPlaying ? '❚❚' : '▶'} 
-              </button>
-              
-              <button onClick={goToNext} className="home-nav-arrow right">&gt;</button>
-            </div>
-
-            {/* 오른쪽 탭 메뉴들 */}
-            <div className="home-slider-tabs">
-              {slidesData.map((slide, index) => (
-                <button 
-                  key={slide.id} 
-                  className={`home-tab-btn ${index === currentIndex ? 'active' : ''}`}
-                  onClick={() => goToSlide(index)}
-                >
-                  {slide.tabTitle}
-                </button>
-              ))}
-            </div>
-
-          </div>
-        </div>
-
       </div>
-    </section>
+    </div>
   );
 }
