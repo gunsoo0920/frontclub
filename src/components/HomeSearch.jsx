@@ -16,7 +16,7 @@ const HomeSearch = () => {
             return;
         }
         // 검색 페이지로 이동 (쿼리스트링 사용: /search?q=검색어)
-        navigate(`/search?=${keyword}`);
+        navigate(`/search?title=${keyword}`);
     };
     
       // 엔터키 쳤을 때도 검색되게
