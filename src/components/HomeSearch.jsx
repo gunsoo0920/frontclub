@@ -52,28 +52,3 @@ const HomeSearch = () => {
 }
 
 export default HomeSearch;
-
-
-
-
-// <div className="home-search-section">
-//                 <div className="home-search-bar">
-//                     {/* 아이콘 클래스 수정: home-search-icon */}
-//                     <svg className="home-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-//                         <circle cx="11" cy="11" r="8"></circle>
-//                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-//                     </svg>
-
-//                     <input 
-//                         type="text" 
-//                         placeholder="서평을 남기고 싶은 책이 있나요?" 
-//                         value={searchTerm}
-//                         onChange={(e) => setSearchTerm(e.target.value)}
-//                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-//                     />
-
-//                     <button className="home-search-btn" onClick={handleSearch}>
-//                         검색
-//                     </button>
-//                 </div>
-//             </div>
