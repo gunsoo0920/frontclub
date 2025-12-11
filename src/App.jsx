@@ -6,7 +6,7 @@ import Login_LoginPage from "./pages/Login_LoginPage";
 import Login_SignUpPage from "./pages/Login_SignPage";
 
 /* 🔹 책 리스트 & 상세 페이지 (너 작업) */
-import BookListPage2 from "./pages/books/BookListPage2";
+import BookListPage from "./pages/books/BookListPage";
 import KidsPage from "./pages/books/KidsPage";
 import EssayPage from "./pages/books/EssayPage";
 import HobbyPage from "./pages/books/HobbyPage";
@@ -17,7 +17,7 @@ import BookSearchPage from "./pages/books/BookSearchPage";
 import HomePage from "./pages/HomePage"
 
 import Header from "./components/Header";
-import Footer from "./components/footer";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -32,7 +32,7 @@ export default function App() {
         <Route path="/signup" element={<Login_SignUpPage />} />
 
         {/* ⭐ 전체 책 리스트 */}
-        <Route path="/books" element={<BookListPage2 />} />
+        <Route path="/books" element={<BookListPage />} />
 
         {/* ⭐ 상세 페이지 */}
         <Route path="/books/:id" element={<Detail />} />

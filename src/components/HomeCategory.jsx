@@ -6,9 +6,15 @@ export default function HomeCategory(props) {
     const [startIndex, setStartIndex] = useState(0);
     const itemsPerPage = 5; // 한 번에 보여줄 책 개수
     const [books, setBooks] = useState([]);
-    // 데이터 로딩
+
     useEffect(() => {
-        fetch(`http://localhost:3001/books?category=${props.category}`)
+        let url = '';
+        if (props.category === "ALL"){ // '==' 보다는 '===' 사용 권장
+            url = 'http://localhost:3001/books';
+        } else {
+            url = `http://localhost:3001/books?category=${props.category}`;
+        }
+        fetch(url)
         .then(response => response.json())
         .then(data => setBooks(data))
         .catch(error => console.error("데이터 로드 실패:", error));
@@ -32,7 +38,11 @@ export default function HomeCategory(props) {
     };
 
     const handleSearch = () => {
-        navigate(`/books?category=${props.category}`);
+        if (props.category === "ALL"){
+            navigate(`/books`)
+            return
+        }
+        navigate(`/books/${props.category}`);
     }
 
     // 현재 화면에 보여줄 책들만 잘라내기

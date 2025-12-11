@@ -29,22 +29,30 @@ export default function HomePage(){
 
             {/* 카테고리 목록들 */}
             <HomeCategory
-                title={bookCategory["DEV"]}
-                category={"DEV"}
-                bgColor="#f9f9f9" 
+                title={bookCategory["ALL"]}
+                category={"ALL"}
+                bgColor="#ffffff"
+
             />
 
             <HomeCategory
-                title={bookCategory["AI"]}
-                category={"AI"}
+                title={bookCategory["KIDS"]}
+                category={"KIDS"}
+                bgColor="#f9f9f9"
+
+            />
+
+            <HomeCategory
+                title={bookCategory["ESSAY"]}
+                category={"ESSAY"}
                 bgColor="#ffffff"
 
             />
 
      
             <HomeCategory
-                title={bookCategory["NOVEL"]}
-                category={"NOVEL"}
+                title={bookCategory["HOBBY"]}
+                category={"HOBBY"}
                 bgColor="#f9f9f9"
 
             />
@@ -53,8 +61,8 @@ export default function HomePage(){
                 // books={selectCategory(CategoryKey[4])} 
                 // title={bookCategory[CategoryKey[4]]}
                 // category={CategoryKey[4]}
-                title={bookCategory["SELF"]}
-                category={"SELF"}
+                title={bookCategory["DEV"]}
+                category={"DEV"}
                 bgColor="#ffffff"
                 // setBookIdHandle={setBookIdHandle}
                 // setCategoryHandle={setCategoryHandle}
