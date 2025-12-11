@@ -7,7 +7,7 @@ export default function Header(props) {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user"));
+        const user = JSON.parse(localStorage.getItem("sessionUser"));
         if (user) {
             setUser(user); 
         }

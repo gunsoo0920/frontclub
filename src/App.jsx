@@ -2,8 +2,9 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 /* 🔹 로그인 관련 페이지 (gunsoo 브랜치) */
-import Login_LoginPage from "./pages/Login_LoginPage";
-import Login_SignUpPage from "./pages/Login_SignPage";
+import LoginPage from "./pages/Login_LoginPage";
+import SignUpPage from "./pages/Login_SignPage";
+import FindAccountPage from "./pages/FindAccountPage";
 
 /* 🔹 책 리스트 & 상세 페이지 (너 작업) */
 import BookListPage from "./pages/books/BookListPage";
@@ -28,9 +29,10 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
 
         {/* ⭐ 로그인/회원가입 */}
-        <Route path="/login" element={<Login_LoginPage />} />
-        <Route path="/signup" element={<Login_SignUpPage />} />
-
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/find-account" element={<FindAccountPage />} />
+        
         {/* ⭐ 전체 책 리스트 */}
         <Route path="/books" element={<BookListPage />} />
 

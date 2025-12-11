@@ -1,3 +1,9 @@
+/*  
+  📌 Login_SignUpSuccessModal.jsx
+  - 회원가입 완료 시 표시되는 모달 컴포넌트
+  - 완료 후 로그인 페이지로 이동
+*/
+
 import "../css/Login_Auth.css";
 
 export default function Login_SignUpSuccessModal({ userName, onClose }) {
