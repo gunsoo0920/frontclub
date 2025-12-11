@@ -14,7 +14,7 @@ export default function Header(props) {
     }, []);
 
     function remove_user() {
-        localStorage.removeItem("user");
+        localStorage.removeItem("sessionUser");
         setUser(null); 
     }
 
