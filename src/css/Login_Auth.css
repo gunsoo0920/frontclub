@@ -78,7 +78,7 @@
 }
 
 /* ================================
-   📌 오류 메시지
+   📌 메시지 스타일 (오류/성공)
    ================================ */
 .auth-error {
   color: #ff4d4d;
@@ -87,6 +87,20 @@
   margin-bottom: 5px;
   text-align: left;
   padding-left: 3px;
+}
+
+/* [NEW] 성공 메시지 (녹색 계열) */
+.auth-success {
+  color: #28a745;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  background: #e9f7ef;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #c3e6cb;
 }
 
 /* ================================
@@ -99,7 +113,7 @@
 }
 
 .auth-bottom a {
-  color: #ff4d4d;
+  color: #ff6a6a;
   font-weight: bold;
   margin-left: 5px;
   text-decoration: none;
@@ -164,4 +178,43 @@
 
 .modal-close-btn:hover {
   background: #ff4d4d;
+}
+
+/* ================================
+   📌 [NEW] 아이디/비밀번호 찾기 탭 스타일
+   ================================ */
+.find-tab-group {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.find-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  color: #888;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.find-tab:hover {
+  color: #555;
+}
+
+.find-tab.active {
+  color: #ff6a6a;
+  border-bottom: 2px solid #ff6a6a;
+  font-weight: bold;
+}
+
+.find-info-text {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+  text-align: left;
+  line-height: 1.4;
 }

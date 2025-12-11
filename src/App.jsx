@@ -1,17 +1,24 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login_LoginPage from "./pages/Login_LoginPage";
-import Login_SignUpPage from "./pages/Login_SignPage";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-export default function App() {
+// 📌 만든 페이지들 불러오기 (파일 경로 확인!)
+import LoginPage from "./pages/Login_LoginPage";
+import SignUpPage from "./pages/Login_SignPage";
+import FindAccountPage from "./pages/FindAccountPage";
+
+function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* 처음 실행 → /login 으로 강제 이동 */}
-        <Route path="/" element={<Navigate to="/login" />} />
+    <Routes>
+      {/* [1] 기본 경로("/") 접속 시 로그인 페이지("/login")로 자동 이동 
+        - replace: 뒤로가기 했을 때 다시 원래 페이지로 돌아오지 않게 함
+      */}
+      <Route path="/" element={<Navigate to="/login" replace />} />
 
-        <Route path="/login" element={<Login_LoginPage />} />
-        <Route path="/signup" element={<Login_SignUpPage />} />
-      </Routes>
-    </BrowserRouter>
+      {/* [2] 각 페이지 라우팅 설정 */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/find-account" element={<FindAccountPage />} />
+    </Routes>
   );
 }
+
+export default App;

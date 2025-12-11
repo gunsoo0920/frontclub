@@ -1,21 +1,15 @@
-/*  
-  📌 Login_SignUpForm.jsx
-  - 회원가입 입력 처리
-  - 이메일 중복 검사
-  - JSON Server에 신규 회원 정보 저장
-  - 회원가입 성공 모달 출력 후 로그인 페이지로 이동
-*/
-
 import { useState } from "react";
 import axios from "axios";
 import Login_SignUpSuccessModal from "./Login_SignUpSuccessModal";
+// (위 모달 파일이 같은 폴더에 있어야 함)
 
 export default function Login_SignUpForm() {
-  // 입력값 상태 관리
+  // 입력값 상태 관리 (user_phone 추가)
   const [form, setForm] = useState({
     user_id: "",
     user_name: "",
     user_pw: "",
+    user_phone: "",
   });
 
   // 오류 메시지
@@ -35,12 +29,13 @@ export default function Login_SignUpForm() {
     e.preventDefault();
 
     /* ------------------------------
-       [1] 필수 입력값 검사
+       [1] 필수 입력값 검사 (전화번호 포함)
     ------------------------------ */
     if (
       !form.user_id.trim() ||
       !form.user_name.trim() ||
-      !form.user_pw.trim()
+      !form.user_pw.trim() ||
+      !form.user_phone.trim()
     ) {
       setErrorMsg("모든 입력 칸을 채워주세요.");
       return;
@@ -56,7 +51,16 @@ export default function Login_SignUpForm() {
     }
 
     /* ------------------------------
-       [3] 비밀번호 최소 글자수 검사
+       [3] 전화번호 형식 검사 (010-XXXX-XXXX)
+    ------------------------------ */
+    const phoneCheck = /^010-\d{4}-\d{4}$/;
+    if (!phoneCheck.test(form.user_phone)) {
+      setErrorMsg("전화번호는 '010-0000-0000' 형식으로 입력해주세요.");
+      return;
+    }
+
+    /* ------------------------------
+       [4] 비밀번호 최소 글자수 검사
     ------------------------------ */
     if (form.user_pw.length < 4) {
       setErrorMsg("비밀번호는 최소 4자리 이상이어야 합니다.");
@@ -64,8 +68,7 @@ export default function Login_SignUpForm() {
     }
 
     /* ------------------------------------------------------------
-       [4] 아이디(이메일) 중복 검사
-       - JSON Server에서 user_id가 동일한 데이터 조회
+       [5] 아이디 중복 검사
     ------------------------------------------------------------ */
     const exists = await axios.get(
       `http://localhost:3001/users?user_id=${form.user_id}`
@@ -77,7 +80,7 @@ export default function Login_SignUpForm() {
     }
 
     /* ------------------------------------------------------------
-       [5] 회원 정보 DB(json-server)에 저장
+       [6] 회원 정보 DB 저장
     ------------------------------------------------------------ */
     await axios.post("http://localhost:3001/users", form);
 
@@ -94,6 +97,13 @@ export default function Login_SignUpForm() {
           onChange={handleChange}
         />
         <input name="user_name" placeholder="이름" onChange={handleChange} />
+        {/* 전화번호 입력 추가 */}
+        <input
+          name="user_phone"
+          placeholder="전화번호 (010-0000-0000)"
+          onChange={handleChange}
+          maxLength="13"
+        />
         <input
           type="password"
           name="user_pw"
