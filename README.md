@@ -1,86 +1,15 @@
-# 📚 React + JSON Server 로그인/회원가입 구현
+## 📅 [2025-02-??] 메인 페이지 UI 개선 및 자동 로그아웃 기능 구현 (Soongyu)
 
-본 프로젝트는 React와 JSON Server를 이용하여  
-간단한 로그인 및 회원가입 기능을 구현했습니다.
+### ✨ 1. 자동 로그아웃 (Idle Timeout) 구현
+- **기능:** 사용자가 5분 동안 활동(클릭, 키보드, 마우스 이동)이 없으면 보안을 위해 자동 로그아웃 처리.
+- **방식:** `localStorage`에 유저 정보와 함께 `expire`(만료 시간) 저장. `App.js`에서 전역으로 활동 감지 및 시간 연장.
+- **수정 파일:** `App.js`, `Login_LoginForm.jsx`, `Header.jsx`
 
----
+### 🎨 2. UI/UX 애니메이션 강화
+- **Scroll Reveal:** 메인 페이지 스크롤 시 각 섹션이 부드럽게 떠오르는 등장 효과(Fade-in) 적용.
+- **Smooth Slider:** 책 리스트 슬라이더가 뚝뚝 끊기지 않고, 부드럽게 옆으로 미끄러지도록(Sliding) 개선. (5개 단위 이동)
+- **수정 파일:** `HomePage.jsx`, `HomeCategory.jsx`, `Home.css`
 
-## 📂 기본 폴더 구조
-
-```
-src/
- ├ components/
- │   ├ Login_LoginForm.jsx
- │   ├ Login_SignUpForm.jsx
- │   ├ Login_LoginSuccessModal.jsx
- │   └ Login_SignUpSuccessModal.jsx
- │
- ├ pages/
- │   ├ Login_LoginPage.jsx
- │   └ Login_SignUpPage.jsx
- │
- ├ css/
- │   └ Login_Auth.css
- │
- └ App.jsx
-```
-
----
-
-## 🔐 세션 유지 방식 (중요)
-
-본 프로젝트는 JSON Server 특성상 **실제 서버 세션을 사용할 수 없으므로**,  
-**localStorage를 이용하여 세션과 동일한 효과를 구현**했습니다.
-
-### ✔ 로그인 성공 시
-
-```js
-localStorage.setItem("sessionUser", JSON.stringify(user));
-```
-
-### ✔ 로그인 상태 확인
-
-```js
-const user = JSON.parse(localStorage.getItem("sessionUser"));
-```
-
-### ✔ 로그아웃 시
-
-```js
-localStorage.removeItem("sessionUser");
-```
-
-➡ 이 방식 덕분에 **새로고침 또는 페이지 이동 후에도 로그인 상태가 유지**됩니다.
-
----
-
-## ✨ 주요 기능 설명
-
-### 🔑 1. 로그인 기능
-
-- user_id(아이디), user_pw(비밀번호)를 JSON Server에서 조회하여 인증
-- 로그인 성공 시 localStorage에 sessionUser 저장(세션 유지)
-- 성공 모달 표시
-
-### 📝 2. 회원가입 기능
-
-- user_id 중복 검사(JSON Server 기반)
-- 이메일 형식 체크 / 비밀번호 최소 길이 체크
-- 회원가입 성공 시 모달 표시 후 로그인 페이지로 이동
-
-### 🔒 3. 인증이 필요한 기능 처리
-
-- localStorage에 sessionUser가 없으면 접근 차단 가능
-  ```js
-  if (!localStorage.getItem("sessionUser")) {
-    alert("로그인 후 이용해주세요.");
-  }
-  ```
-
----
-
-## 🛠 JSON Server 실행
-
-```bash
-json-server --watch db.json --port 3001
-```
+### 💄 3. 디자인 디테일 수정
+- **카테고리 헤더:** 제목만 붕 떠 보이는 현상 해결을 위해 하단 라인(Border) 추가.
+- **서브타이틀:** 각 카테고리(ALL, DEV, NOVEL 등)에 맞는 감성적인 서브타이틀 멘트 자동 매핑.
