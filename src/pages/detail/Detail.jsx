@@ -12,12 +12,9 @@ const Detail = () => {
   const [newReview, setNewReview] = useState("");
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editingContent, setEditingContent] = useState("");
-  const [myReviews, setMyReviews] = useState([]);
-
-  // ⭐ 오른쪽 사이드바에서 리뷰 작성 창을 띄우기 위한 state
   const [showRightReviewBox, setShowRightReviewBox] = useState(false);
 
-  // 로그인 정보
+  // 🔐 로그인 정보 (localStorage 기반)
   const user = JSON.parse(localStorage.getItem("user")) || null;
 
   /* ---------------------------
@@ -27,7 +24,7 @@ const Detail = () => {
     fetch(`${API}/books/${id}`)
       .then((res) => res.json())
       .then((data) => setBook(data))
-      .catch((err) => console.error("책 상세조회 실패:", err));
+      .catch((err) => console.error("책 상세 조회 실패:", err));
   }, [id]);
 
   /* ---------------------------
@@ -37,17 +34,14 @@ const Detail = () => {
     fetch(`${API}/reviews?bookId=${id}`)
       .then((res) => res.json())
       .then((data) => setReviews(data))
-      .catch((err) => console.error("후기 목록 실패:", err));
+      .catch((err) => console.error("리뷰 목록 조회 실패:", err));
   }, [id]);
 
   /* ---------------------------
-      ⭐ 내가 쓴 리뷰만 필터링
+      ⭐ 내가 쓴 리뷰 (파생 데이터)
   ---------------------------- */
-  useEffect(() => {
-    if (user) {
-      setMyReviews(reviews.filter((r) => r.userId === user.id));
-    }
-  }, [reviews, user]);
+  const myReviews =
+    user && user.id ? reviews.filter((r) => r.userId === user.id) : [];
 
   if (!book) return <div>📚 책 정보를 불러오는 중...</div>;
 
@@ -55,8 +49,16 @@ const Detail = () => {
       ✏️ 후기 작성 (POST)
   --------------------------- */
   const handleCreateReview = () => {
-    if (!newReview.trim()) return alert("내용을 입력해주세요.");
-    if (!user) return alert("로그인 후 작성 가능합니다.");
+    // 🔒 방어 로직 (필수)
+    if (!user || !user.id) {
+      alert("로그인 후 작성 가능합니다.");
+      return;
+    }
+
+    if (!newReview.trim()) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
 
     const reviewData = {
       bookId: Number(id),
@@ -75,7 +77,7 @@ const Detail = () => {
       .then((data) => {
         setReviews((prev) => [...prev, data]);
         setNewReview("");
-        setShowRightReviewBox(false); // 작성 후 사이드 박스 닫기
+        setShowRightReviewBox(false);
       })
       .catch((err) => console.error("리뷰 작성 실패:", err));
   };
@@ -92,11 +94,14 @@ const Detail = () => {
       ✏️ 리뷰 수정 완료 (PUT)
   --------------------------- */
   const handleUpdateReview = (reviewId) => {
+    const target = reviews.find((r) => r.id === reviewId);
+    if (!target) return;
+
     fetch(`${API}/reviews/${reviewId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        ...reviews.find((r) => r.id === reviewId),
+        ...target,
         content: editingContent,
       }),
     })
@@ -113,6 +118,8 @@ const Detail = () => {
       🗑 리뷰 삭제 (DELETE)
   --------------------------- */
   const handleDeleteReview = (reviewId) => {
+    if (!user || !user.id) return;
+
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
 
     fetch(`${API}/reviews/${reviewId}`, {
@@ -134,7 +141,7 @@ const Detail = () => {
             </p>
           </div>
 
-          {/* -------- 도서 기본 정보 -------- */}
+          {/* -------- 도서 정보 -------- */}
           <section className="info-section">
             <h3>📘 도서 정보</h3>
             <div className="info-grid">
@@ -148,10 +155,12 @@ const Detail = () => {
 
           {/* -------- 나의 리뷰 -------- */}
           <section className="my-review-section">
-            <h3>⭐ 나의 리뷰</h3>
+            <h3>⭐ 나의 서평</h3>
 
             {myReviews.length === 0 && (
-              <p className="no-my-review">아직 내가 작성한 리뷰가 없습니다.</p>
+              <p className="no-my-review">
+                로그인 후 작성한 리뷰가 여기에 표시됩니다.
+              </p>
             )}
 
             {myReviews.map((review) => (
@@ -173,17 +182,21 @@ const Detail = () => {
                       <button onClick={() => handleUpdateReview(review.id)}>
                         수정 완료
                       </button>
-                      <button onClick={() => setEditingReviewId(null)}>취소</button>
+                      <button onClick={() => setEditingReviewId(null)}>
+                        취소
+                      </button>
                     </div>
                   </div>
                 ) : (
                   <p className="review-text">{review.content}</p>
                 )}
 
-                {user && user.id === review.userId && editingReviewId !== review.id && (
+                {user && user.id === review.userId && (
                   <div className="review-action">
                     <button onClick={() => startEdit(review)}>수정</button>
-                    <button onClick={() => handleDeleteReview(review.id)}>삭제</button>
+                    <button onClick={() => handleDeleteReview(review.id)}>
+                      삭제
+                    </button>
                   </div>
                 )}
               </div>
@@ -192,7 +205,7 @@ const Detail = () => {
 
           {/* -------- 전체 후기 -------- */}
           <section className="review-list-section">
-            <h3>📝 후기 목록 ({reviews.length})</h3>
+            <h3>📝 서평 목록 ({reviews.length})</h3>
 
             {reviews.map((review) => (
               <div key={review.id} className="review-card">
@@ -202,30 +215,7 @@ const Detail = () => {
                     {new Date(review.createdAt).toLocaleDateString()}
                   </span>
                 </div>
-
-                {editingReviewId === review.id ? (
-                  <div className="review-edit-block">
-                    <textarea
-                      value={editingContent}
-                      onChange={(e) => setEditingContent(e.target.value)}
-                    />
-                    <div className="review-edit-btns">
-                      <button onClick={() => handleUpdateReview(review.id)}>
-                        수정 완료
-                      </button>
-                      <button onClick={() => setEditingReviewId(null)}>취소</button>
-                    </div>
-                  </div>
-                ) : (
-                  <p className="review-text">{review.content}</p>
-                )}
-
-                {user && user.id === review.userId && editingReviewId !== review.id && (
-                  <div className="review-action">
-                    <button onClick={() => startEdit(review)}>수정</button>
-                    <button onClick={() => handleDeleteReview(review.id)}>삭제</button>
-                  </div>
-                )}
+                <p className="review-text">{review.content}</p>
               </div>
             ))}
           </section>
@@ -234,7 +224,11 @@ const Detail = () => {
         {/* ============ RIGHT ============ */}
         <aside className="detail-right">
           <div className="detail-cover-box">
-            <img src={book.image_path} alt={book.title} className="cover-img" />
+            <img
+              src={book.image_path}
+              alt={book.title}
+              className="cover-img"
+            />
           </div>
 
           <h3 className="side-title">{book.title}</h3>
@@ -245,17 +239,20 @@ const Detail = () => {
             <p><strong>분류</strong> {book.category}</p>
           </div>
 
-          <div className="side-buttons">
-            <button
-              className="btn-yellow"
-              onClick={() => setShowRightReviewBox(!showRightReviewBox)}
-            >
-              도서 리뷰 작성
-            </button>
-          </div>
+          {/* 🔐 로그인 시에만 버튼 노출 */}
+          {user && user.id && (
+            <div className="side-buttons">
+              <button
+                className="btn-yellow"
+                onClick={() => setShowRightReviewBox(!showRightReviewBox)}
+              >
+                도서 리뷰 작성
+              </button>
+            </div>
+          )}
 
-          {/* 🔥 오른쪽 리뷰 작성 UI */}
-          {showRightReviewBox && user && (
+          {/* 🔐 로그인 + 버튼 클릭 시에만 작성 UI */}
+          {showRightReviewBox && user && user.id && (
             <div className="right-review-box">
               <textarea
                 value={newReview}
@@ -268,8 +265,8 @@ const Detail = () => {
             </div>
           )}
 
-          {!user && showRightReviewBox && (
-            <p className="login-warn">로그인 후 작성 가능합니다.</p>
+          {!user && (
+            <p className="login-warn">로그인 후 리뷰 작성이 가능합니다.</p>
           )}
         </aside>
       </div>
