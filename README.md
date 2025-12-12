@@ -1,97 +1,15 @@
-# update
+## 📅 [2025-02-??] 메인 페이지 UI 개선 및 자동 로그아웃 기능 구현 (Soongyu)
 
-## 페이지 위치
+### ✨ 1. 자동 로그아웃 (Idle Timeout) 구현
+- **기능:** 사용자가 5분 동안 활동(클릭, 키보드, 마우스 이동)이 없으면 보안을 위해 자동 로그아웃 처리.
+- **방식:** `localStorage`에 유저 정보와 함께 `expire`(만료 시간) 저장. `App.js`에서 전역으로 활동 감지 및 시간 연장.
+- **수정 파일:** `App.js`, `Login_LoginForm.jsx`, `Header.jsx`
 
-```
-src
-│  HomePage.jsx - 메인페이지(App.jsx대신 사용)
-│
-├─components
-│      HomeCategory.jsx
-├─pages
-│      Home.jsx
-└─style
-        Home.css
-```
+### 🎨 2. UI/UX 애니메이션 강화
+- **Scroll Reveal:** 메인 페이지 스크롤 시 각 섹션이 부드럽게 떠오르는 등장 효과(Fade-in) 적용.
+- **Smooth Slider:** 책 리스트 슬라이더가 뚝뚝 끊기지 않고, 부드럽게 옆으로 미끄러지도록(Sliding) 개선. (5개 단위 이동)
+- **수정 파일:** `HomePage.jsx`, `HomeCategory.jsx`, `Home.css`
 
-## 저장 데이터
-
-+ 임의 저장
-  1. 로그인 유저 : 로그인 (Login)
-    ``` react
-    const [userId, setUser] = useState("testuser");
-    ```
-
-  2. 현재 페이지 Book, Home, Login, Review
-    ``` react
-    const [page, setPage] = useState("main");
-    ```
-
-  3. 카테고리 : 목록:(Book)
-  ``` react
-  const [category, setCategory] = useState();
-  ```
-  
-  4. 책 id : 서평(review)
-  ``` react
-  const [bookId, setBookId] = useState();
-  ```
-
-+ 책 데이터
-  - books에 모든 책 데이터 가져옴(list)
-    ``` react
-    const [books, setBooks] = useState([]);
-      
-    useEffect(() => {
-      fetch('http://localhost:3001/books')
-          .then(response => response.json())
-          .then(data => setBooks(data))
-          .catch(error => console.error("데이터 로드 실패:"error));
-    }, []);
-    ```
-  
-  + books 사용법 
-
-    - 선택
-    ```react
-    <div>{books[0]["id"]}</div>
-    ```
-
-    - map
-    ```react
-    <div>
-      {books.map(item => (
-          <div key={item.id}>{item.title}</div>
-      ))}
-    </div>
-    ```
-
-## 페이지
-- 저장시 페이지 이동
-  ``` react
-  const [page, setPage] = useState("main");
-  ```
-
-- 페이지 정보 보내기
-  ```react
-  const pages = {
-        "main": () => <Home 
-                    setPageHandle={setPageHandle}
-                    setBookIdHandle={setBook}
-                    setCategoryHandle={set_Category}
-                    books = {books}
-                    bookCategory = {bookCategory}
-                  />,
-
-        "login": () => <Login />,
-        "review": () => <Review />,
-        "book": () => <Book />
-    }
-  ```
-  원하는 정보를 혹은 함수를 보냄
-  ```react
-  함수 예시
-  const setPageHandle = (e) => {
-        setPage(e)
-  }
-  ```
+### 💄 3. 디자인 디테일 수정
+- **카테고리 헤더:** 제목만 붕 떠 보이는 현상 해결을 위해 하단 라인(Border) 추가.
+- **서브타이틀:** 각 카테고리(ALL, DEV, NOVEL 등)에 맞는 감성적인 서브타이틀 멘트 자동 매핑.

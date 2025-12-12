@@ -1,9 +1,8 @@
-import HomeCategory from "../components/HomeCategory"
-import HomeSlider from "../components/HomeSlider"
+import HomeCategory from "../components/HomeCategory";
+import HomeSlider from "../components/HomeSlider";
 import HomeSearch from "../components/HomeSearch";
-
-import "../css/Home.css"
-import { useState, useEffect } from 'react';
+import "../css/Home.css";
+import { useState, useEffect, useRef } from 'react';
 
 const bookCategory = {
   "ALL": "🦉올빼미클럽 전체 도서",
@@ -17,56 +16,64 @@ const bookCategory = {
   "HOBBY": "취미, 라이프 스타일"
 };
 
-export default function HomePage(){
-    return(
-        <div className="home-container">
-            {/* 메인 슬라이더 */}
-            <HomeSlider />
+// 애니메이션 래퍼 컴포넌트
+function FadeInSection({ children }) {
+  const domRef = useRef();
+  const [isVisible, setVisible] = useState(false);
 
-            {/* ▼ 검색 섹션 (클래스 이름 수정됨) */}
-            
-            <HomeSearch />
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        setVisible(true);
+        observer.unobserve(domRef.current);
+      }
+    }, { threshold: 0.1 });
 
-            {/* 카테고리 목록들 */}
-            <HomeCategory
-                title={bookCategory["ALL"]}
-                category={"ALL"}
-                bgColor="#ffffff"
+    const currentRef = domRef.current;
+    if (currentRef) observer.observe(currentRef);
 
-            />
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, []);
 
-            <HomeCategory
-                title={bookCategory["KIDS"]}
-                category={"KIDS"}
-                bgColor="#f9f9f9"
+  return (
+    <div ref={domRef} className={`fade-wrap ${isVisible ? 'visible' : ''}`}>
+      {children}
+    </div>
+  );
+}
 
-            />
+export default function HomePage() {
+  return (
+    <div className="home-container">
+      {/* 슬라이더는 즉시 표시 */}
+      <HomeSlider />
 
-            <HomeCategory
-                title={bookCategory["ESSAY"]}
-                category={"ESSAY"}
-                bgColor="#ffffff"
+      {/* 검색창부터 애니메이션 적용 */}
+      <FadeInSection>
+        <HomeSearch />
+      </FadeInSection>
 
-            />
+      <FadeInSection>
+        <HomeCategory title={bookCategory["ALL"]} category={"ALL"} bgColor="#ffffff" />
+      </FadeInSection>
 
-     
-            <HomeCategory
-                title={bookCategory["HOBBY"]}
-                category={"HOBBY"}
-                bgColor="#f9f9f9"
+      <FadeInSection>
+        <HomeCategory title={bookCategory["KIDS"]} category={"KIDS"} bgColor="#f9f9f9" />
+      </FadeInSection>
 
-            />
+      <FadeInSection>
+        <HomeCategory title={bookCategory["ESSAY"]} category={"ESSAY"} bgColor="#ffffff" />
+      </FadeInSection>
 
-            <HomeCategory
-                // books={selectCategory(CategoryKey[4])} 
-                // title={bookCategory[CategoryKey[4]]}
-                // category={CategoryKey[4]}
-                title={bookCategory["DEV"]}
-                category={"DEV"}
-                bgColor="#ffffff"
-                // setBookIdHandle={setBookIdHandle}
-                // setCategoryHandle={setCategoryHandle}
-            />
-        </div>
-    )
+      <FadeInSection>
+        <HomeCategory title={bookCategory["HOBBY"]} category={"HOBBY"} bgColor="#f9f9f9" />
+      </FadeInSection>
+
+      <FadeInSection>
+        <HomeCategory title={bookCategory["DEV"]} category={"DEV"} bgColor="#ffffff" />
+      </FadeInSection>
+    </div>
+  );
 }
