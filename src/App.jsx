@@ -1,8 +1,8 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react"; 
+import { useEffect, useState } from "react";
 
-/* 페이지 import 생략 (기존과 동일) */
+/* 페이지 import */
 import LoginPage from "./pages/Login_LoginPage";
 import SignUpPage from "./pages/Login_SignPage";
 import FindAccountPage from "./pages/FindAccountPage";
@@ -17,8 +17,10 @@ import HomePage from "./pages/HomePage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-export default function App() {
+// ✅ [추가됨] 페이지 이동 시 스크롤을 맨 위로 올리는 컴포넌트
+import ScrollToTop from "./components/ScrollToTop";
 
+export default function App() {
   // 1. [핵심] 앱이 켜질 때 '즉시' 시간을 검사해서 유저 상태를 결정함
   const [user, setUser] = useState(() => {
     const storedStr = localStorage.getItem("sessionUser");
@@ -32,7 +34,7 @@ export default function App() {
       localStorage.removeItem("sessionUser");
       return null;
     }
-    
+
     // 시간 안 지났으면? -> 유저 정보 리턴 (로그인 상태로 시작)
     return item.value;
   });
@@ -41,7 +43,7 @@ export default function App() {
   const handleLogout = () => {
     localStorage.removeItem("sessionUser");
     setUser(null);
-    window.location.href = "/"; 
+    window.location.href = "/";
   };
 
   // 3. 시간 연장 & 자동 로그아웃 감시 (기존 로직 유지)
@@ -53,7 +55,7 @@ export default function App() {
       if (storedStr) {
         const item = JSON.parse(storedStr);
         // 활동 감지 시 5분 연장
-        const newExpire = new Date().getTime() + (5 * 60 * 1000);
+        const newExpire = new Date().getTime() + 5 * 60 * 1000;
         const newItem = { value: item.value, expire: newExpire };
         localStorage.setItem("sessionUser", JSON.stringify(newItem));
       }
@@ -84,9 +86,12 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      {/* ✅ [추가됨] 라우터 최상단에 배치하여 페이지 변경 시마다 스크롤 초기화 */}
+      <ScrollToTop />
+
       {/* ⭐ Header에게 user 정보와 로그아웃 기능을 물려줌 (Props) */}
       <Header user={user} onLogout={handleLogout} />
-      
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -100,7 +105,7 @@ export default function App() {
         <Route path="/books/dev" element={<DevPage />} />
         <Route path="/search" element={<BookSearchPage />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   );
 }

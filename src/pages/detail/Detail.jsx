@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // useNavigate 추가
 import "../../css/bookdetail.css";
 
 const API = "http://localhost:3001";
 
 const Detail = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // 페이지 이동 훅
 
   const [book, setBook] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -14,8 +15,23 @@ const Detail = () => {
   const [editingContent, setEditingContent] = useState("");
   const [showRightReviewBox, setShowRightReviewBox] = useState(false);
 
-  // 🔐 로그인 정보 (localStorage 기반)
-  const user = JSON.parse(localStorage.getItem("user")) || null;
+  // 🔴 [수정됨] 로그인 정보 가져오기 (App.jsx와 로직 통일)
+  const getSessionUser = () => {
+    const storedStr = localStorage.getItem("sessionUser");
+    if (!storedStr) return null;
+
+    const item = JSON.parse(storedStr);
+    const now = new Date().getTime();
+
+    // 만료 시간이 지났으면 null 반환
+    if (now > item.expire) {
+      return null;
+    }
+
+    return item.value; // 유효하다면 유저 정보 반환
+  };
+
+  const user = getSessionUser();
 
   /* ---------------------------
       📘 책 상세 조회
@@ -49,9 +65,10 @@ const Detail = () => {
       ✏️ 후기 작성 (POST)
   --------------------------- */
   const handleCreateReview = () => {
-    // 🔒 방어 로직 (필수)
+    // 🔒 [수정됨] 비로그인 상태 예외처리 강화
     if (!user || !user.id) {
-      alert("로그인 후 작성 가능합니다.");
+      alert("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동합니다.");
+      navigate("/login"); // 로그인 페이지로 이동
       return;
     }
 
@@ -145,11 +162,21 @@ const Detail = () => {
           <section className="info-section">
             <h3>📘 도서 정보</h3>
             <div className="info-grid">
-              <div><span>도서명 :</span> {book.title}</div>
-              <div><span>저자 :</span> {book.authors}</div>
-              <div><span>출판사 :</span> {book.publisher || "정보 없음"}</div>
-              <div><span>ISBN :</span> {book.isbn}</div>
-              <div><span>카테고리 :</span> {book.category}</div>
+              <div>
+                <span>도서명 :</span> {book.title}
+              </div>
+              <div>
+                <span>저자 :</span> {book.authors}
+              </div>
+              <div>
+                <span>출판사 :</span> {book.publisher || "정보 없음"}
+              </div>
+              <div>
+                <span>ISBN :</span> {book.isbn}
+              </div>
+              <div>
+                <span>카테고리 :</span> {book.category}
+              </div>
             </div>
           </section>
 
@@ -224,19 +251,19 @@ const Detail = () => {
         {/* ============ RIGHT ============ */}
         <aside className="detail-right">
           <div className="detail-cover-box">
-            <img
-              src={book.image_path}
-              alt={book.title}
-              className="cover-img"
-            />
+            <img src={book.image_path} alt={book.title} className="cover-img" />
           </div>
 
           <h3 className="side-title">{book.title}</h3>
           <p className="side-author">{book.authors}</p>
 
           <div className="side-info">
-            <p><strong>ISBN</strong> {book.isbn}</p>
-            <p><strong>분류</strong> {book.category}</p>
+            <p>
+              <strong>ISBN</strong> {book.isbn}
+            </p>
+            <p>
+              <strong>분류</strong> {book.category}
+            </p>
           </div>
 
           {/* 🔐 로그인 시에만 버튼 노출 */}
