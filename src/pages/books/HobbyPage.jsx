@@ -3,6 +3,8 @@
 // 메인에서만 필터를 사용하기 때문에 숨김 처리
 
 import BookListPage from "./BookListPage";
+import SortButtons from '../../components/SortCP';
+
 
 /**
  * 취미 전용 리스트 페이지

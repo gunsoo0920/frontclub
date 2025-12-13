@@ -1,4 +1,6 @@
 import BookListPage from "./BookListPage";
+import SortButtons from '../../components/SortCP';
+
 
 /**
  * KIDS 전용 페이지

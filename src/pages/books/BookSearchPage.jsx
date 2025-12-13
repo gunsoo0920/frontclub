@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import BookCard from '../../components/BookCard';
 import '../../css/booklist.css'; // ⭐ 기존 CSS 그대로 사용
+import SortButtons from '../../components/SortCP';
+
 
 const BookSearchPage = () => {
   // URL의 ?q=검색어 가져오기
