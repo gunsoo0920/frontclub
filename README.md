@@ -31,7 +31,7 @@ npm install
 
 ```bash
 # data.json이 있는 경로에서 실행해주세요.
-npx json-server ./data.json --port 4000
+npm run server
 ```
 
 ### 💻 3) Frontend 실행 (React App)
@@ -39,7 +39,7 @@ npx json-server ./data.json --port 4000
 - 웹 애플리케이션을 실행합니다.
 
 ```bash
-npm start
+npm run dev
 ```
 
 <br>
