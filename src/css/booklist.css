@@ -257,6 +257,84 @@
     object-fit: contain;
 }
 
+/* =========================
+   정렬 옵션 스타일
+========================= */
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* select 박스 */
+.sort-options select {
+  appearance: none;           /* 기본 화살표 제거 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding: 8px 36px 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23666' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+/* hover */
+.sort-options select:hover {
+  border-color: #aaa;
+}
+
+/* focus */
+.sort-options select:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(107, 78, 255, 0.15);
+}
+
+/* 총 권수 */
+.sort-options span {
+  font-size: 13px;
+  color: #777;
+}
+
+/* =========================
+   필터 + 정렬 전체 정렬 보정
+========================= */
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .filter-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .sort-options {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sort-options select {
+    width: 160px;
+  }
+}
+
 /* 이미지 확대 */
 .card-image-wrapper:hover .book-image {
     transform: scale(1.05);

@@ -12,10 +12,12 @@ import BookCard from '../../components/BookCard';
 import '../../css/booklist.css';
 import { Link } from "react-router-dom";
 
+const API = "http://localhost:3001";
+
 const BookListPage = ({
   defaultCategory = "ALL",
   pageTitle = "🦉올빼미클럽 전체 도서",
-  showFilter = true      // 개별 페이지에서는 false 를 전달해 필터 숨기기
+  showFilter = true
 }) => {
 
   // 전체 books
@@ -27,47 +29,89 @@ const BookListPage = ({
   // 현재 선택된 카테고리
   const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
 
+  // 정렬 상태
+  const [sortType, setSortType] = useState("DEFAULT");
+
   // 더보기 (초기 20개)
   const [visibleCount, setVisibleCount] = useState(20);
 
-  
-  /* ----- 1. DB 로딩 ----- */
+
+  /* ----- 1. DB 로딩 + 리뷰 개수 병합 ----- */
   useEffect(() => {
-    fetch('http://localhost:3001/books')
-      .then(res => res.json())
-      .then(data => {
-        setBooks(data);
-        setFilteredBooks(data);     // 기본 전체 보여주기
-      })
-      .catch(err => console.error(" DB 로드 실패:", err));
+    const fetchData = async () => {
+      try {
+        const [bookRes, reviewRes] = await Promise.all([
+          fetch(`${API}/books`),
+          fetch(`${API}/reviews`)
+        ]);
+
+        const bookData = await bookRes.json();
+        const reviewData = await reviewRes.json();
+
+        const reviewCountMap = {};
+        reviewData.forEach(r => {
+          reviewCountMap[r.bookId] = (reviewCountMap[r.bookId] || 0) + 1;
+        });
+
+        const booksWithReviewCount = bookData.map(book => ({
+          ...book,
+          reviewCount: reviewCountMap[book.id] || 0
+        }));
+
+        setBooks(booksWithReviewCount);
+        setFilteredBooks(booksWithReviewCount);
+
+      } catch (err) {
+        console.error("DB 로드 실패:", err);
+      }
+    };
+
+    fetchData();
   }, []);
 
 
-  /* ----- 2. 카테고리 변경 ----- */
+  /* ----- 2. 필터 + 정렬 통합 처리 ----- */
   useEffect(() => {
 
-    /**
-     * NOTE:
-     *  - 개별 페이지는 defaultCategory를 전달받음 (Kids/Dev 등)
-     *  - ALL이면 전체 보여주기
-     */
+    let result = [];
+
+    // 1️⃣ 카테고리 필터
     if (selectedCategory === "ALL") {
-      setFilteredBooks(books);
+      result = [...books];
     } else {
-      setFilteredBooks(
-        books.filter(book => book.category === selectedCategory)
+      result = books.filter(book => book.category === selectedCategory);
+    }
+
+    // 2️⃣ 정렬
+    if (sortType === "TITLE") {
+      result.sort((a, b) =>
+        a.title.localeCompare(b.title, "ko-KR", {
+          numeric: true,
+          sensitivity: "base"
+        })
       );
     }
 
-    // 카테고리 바뀌면 다시 20개만
+    if (sortType === "REVIEW") {
+      result.sort((a, b) =>
+        b.reviewCount - a.reviewCount
+      );
+    }
+
+    setFilteredBooks(result);
     setVisibleCount(20);
 
-  }, [selectedCategory, books]);
+  }, [books, selectedCategory, sortType]);
 
 
   // 필터 클릭
   const handleFilter = (category) => {
     setSelectedCategory(category);
+  };
+
+  // 정렬 변경
+  const handleSort = (e) => {
+    setSortType(e.target.value);
   };
 
   // 더 보기
@@ -79,80 +123,41 @@ const BookListPage = ({
   return (
     <div className="book-list-container">
 
-
-      {/* 
-        TODO: Merge 후 삭제
-        - 임시로 개별 페이지 이동 테스트용 버튼
-        - 메인페이지에서 메뉴 section으로 대체해야 함 
-      */}
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-        <Link to="/books"><button>전체</button></Link>
-        <Link to="/books/kids"><button>유아/아동</button></Link>
-        <Link to="/books/essay"><button>에세이</button></Link>
-        <Link to="/books/hobby"><button>취미</button></Link>
-        <Link to="/books/dev"><button>개발/IT</button></Link>
-      </div>
-
-
-      {/* ----- 페이지 타이틀 ----- */}
       <header className="page-header">
         <div className="title-section">
           <h2 className="page-title">{pageTitle}</h2>
         </div>
       </header>
 
-
-      {/* ----- 필터 + 총 권수 섹션 ----- */}
       <div className="filter-container">
 
         {showFilter && (
           <div className="filter-buttons">
-
-            <button
-              className={`filter-btn ${selectedCategory === 'ALL' ? 'active' : ''}`}
-              onClick={() => handleFilter('ALL')}
-            >전체</button>
-
-            <button
-              className={`filter-btn ${selectedCategory === 'KIDS' ? 'active' : ''}`}
-              onClick={() => handleFilter('KIDS')}
-            >유아/아동</button>
-
-            <button
-              className={`filter-btn ${selectedCategory === 'ESSAY' ? 'active' : ''}`}
-              onClick={() => handleFilter('ESSAY')}
-            >에세이</button>
-
-            <button
-              className={`filter-btn ${selectedCategory === 'HOBBY' ? 'active' : ''}`}
-              onClick={() => handleFilter('HOBBY')}
-            >취미</button>
-
-            <button
-              className={`filter-btn ${selectedCategory === 'DEV' ? 'active' : ''}`}
-              onClick={() => handleFilter('DEV')}
-            >개발/IT</button>
-
+            <button className={`filter-btn ${selectedCategory === 'ALL' ? 'active' : ''}`} onClick={() => handleFilter('ALL')}>전체</button>
+            <button className={`filter-btn ${selectedCategory === 'KIDS' ? 'active' : ''}`} onClick={() => handleFilter('KIDS')}>유아/아동</button>
+            <button className={`filter-btn ${selectedCategory === 'ESSAY' ? 'active' : ''}`} onClick={() => handleFilter('ESSAY')}>에세이</button>
+            <button className={`filter-btn ${selectedCategory === 'HOBBY' ? 'active' : ''}`} onClick={() => handleFilter('HOBBY')}>취미</button>
+            <button className={`filter-btn ${selectedCategory === 'DEV' ? 'active' : ''}`} onClick={() => handleFilter('DEV')}>개발/IT</button>
           </div>
         )}
 
-        {/* --- 항상 표시되는 부분 (총 권수) --- */}
         <div className="sort-options">
-          총 {filteredBooks.length}권
+          <select value={sortType} onChange={handleSort}>
+            <option value="DEFAULT">기본순</option>
+            <option value="TITLE">가나다순</option>
+            <option value="REVIEW">서평 많은 순</option>
+          </select>
+          <span>총 {filteredBooks.length}권</span>
         </div>
 
       </div>
 
-
-      {/* ----- 도서 카드 그리드 ----- */}
       <div className="book-grid">
         {filteredBooks.slice(0, visibleCount).map(book => (
           <BookCard key={book.id} book={book} />
         ))}
       </div>
 
-
-      {/* ----- 더보기 버튼 ----- */}
       {visibleCount < filteredBooks.length && (
         <div className="load-more-wrapper">
           <button className="load-more-btn" onClick={handleLoadMore}>
