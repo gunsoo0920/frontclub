@@ -1,0 +1,363 @@
+/* src/css/booklist.css */
+
+/* ===================================
+    BookList Layout 기본 컨테이너
+=================================== */
+.book-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+}
+
+/* ==========
+   Title
+========== */
+.title-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* =======================
+    카테고리 필터 버튼
+======================= */
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border-radius: 25px;
+    border: 1px solid #eee;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    color: #888;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background-color: #f9f9f9;
+}
+
+.filter-btn.active {
+    background-color: #ff6b6b;
+    color: white;
+    border-color: #ff6b6b;
+    font-weight: 600;
+}
+
+.sort-options {
+    font-size: 13px;
+    color: #999;
+}
+
+/* 북카드 4열 그리드 레이아웃 */
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px;
+    padding-bottom: 50px;
+}
+
+/* 카드 스타일 */
+.book-card {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===========================
+    썸네일 (정사각형, 센터 정렬)
+=========================== */
+.card-image-wrapper {
+    background-color: #fff1f1;
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4px;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    /* 태그가 이미지와 겹치지 않도록 조정 */
+}
+
+/* 썸네일 내 실제 이미지 */
+.book-image {
+    max-height: 100%;
+    max-width: 100%;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    object-fit: contain;
+}
+
+/* =========================
+    태그 (카테고리+신간)
+========================= */
+.tag-list {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    display: flex;
+    gap: 4px;
+    padding: 0 10px 10px 10px;
+}
+
+.tag {
+    font-size: 10px;
+    padding: 2px 6px;
+    background-color: #888;
+    color: white;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.tag.new {
+    background-color: #ff6b6b;
+    /* '신간' 등 강조용 */
+}
+
+/* 텍스트 정보 */
+.book-info {
+    text-align: left;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+.book-title {
+    font-size: 14px;
+    font-weight: 1000;
+    margin: 0 0 4px 0;
+    line-height: 1.4;
+    word-break: keep-all;
+    height: 20px;
+    overflow: hidden;
+}
+
+.border-bottom {
+    border-bottom: #c7c7c7 solid 1px;
+    margin-bottom: 8px;
+
+}
+
+.book-meta {
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #777;
+    padding-right: 5px;
+}
+
+
+.review-count {
+    color: #ff6b6b;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* --- 더보기 버튼 --- */
+.load-more-container {
+    text-align: center;
+    padding: 40px 0 20px 0;
+}
+
+.load-more-btn {
+    padding: 10px 30px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    transition: background-color 0.2s;
+}
+
+.load-more-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.load-more-wrapper {
+    text-align: center;
+    margin: 50px 0 20px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* --- 버튼 스타일 --- */
+.load-more-btn {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 12px 34px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+
+    /* 부드러운 그림자 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    /* 애니메이션 */
+    transition: all 0.25s ease;
+}
+
+/* hover */
+.load-more-btn:hover {
+    background-color: #ff6b6b;
+    border-color: #ff6b6b;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.load-more-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================
+   카드 Hover Animation
+========================= */
+.card-image-wrapper {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-image-wrapper:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+}
+
+.book-image {
+    transition: transform 0.25s ease;
+    width: 48%;
+    height: 70%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* =========================
+   정렬 옵션 스타일
+========================= */
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* select 박스 */
+.sort-options select {
+  appearance: none;           /* 기본 화살표 제거 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding: 8px 36px 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23666' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+/* hover */
+.sort-options select:hover {
+  border-color: #aaa;
+}
+
+/* focus */
+.sort-options select:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(107, 78, 255, 0.15);
+}
+
+/* 총 권수 */
+.sort-options span {
+  font-size: 13px;
+  color: #777;
+}
+
+/* =========================
+   필터 + 정렬 전체 정렬 보정
+========================= */
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .filter-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .sort-options {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sort-options select {
+    width: 160px;
+  }
+}
+
+/* 이미지 확대 */
+.card-image-wrapper:hover .book-image {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* 반응형 처리 */
+@media (max-width: 1024px) {
+    .book-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/*테블릿 */
+@media (max-width: 768px) {
+    .book-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 모바일 */
+@media (max-width: 480px) {
+    .book-grid {
+        grid-template-columns: 1fr;
+    }
+}

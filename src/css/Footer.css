@@ -1,0 +1,145 @@
+/* 전체 푸터 배경 (밤하늘 색상) */
+.night-footer {
+  background-color: #1e202b; /* 짙은 남색 */
+  color: #b0b3c6; /* 은은한 회색 텍스트 */
+  padding: 60px 20px 30px;
+  margin-top: 50px;
+  font-family: 'Pretendard', sans-serif;
+  border-top: 3px solid #3d405b; /* 상단 구분선 */
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* 각 섹션 공통 */
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-section h3 {
+  color: #fff; /* 제목은 밝게 */
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* 1. 브랜드 영역 */
+.footer-logo {
+  color: #fca311; /* 올빼미 눈 색깔 (포인트 컬러) */
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  font-weight: 800;
+}
+
+.footer-slogan {
+  line-height: 1.6;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* 2. 팀원 영역 (이름 4개) */
+.member-list {
+  list-style: none;
+  padding: 0;
+}
+
+.member-list li {
+  display: flex;
+  justify-content: space-between; /* 직무와 이름을 양끝 정렬 */
+  max-width: 200px; /* 너무 넓어지지 않게 */
+  margin-bottom: 8px;
+  border-bottom: 1px solid #363945; /* 이름 밑에 얇은 줄 */
+  padding-bottom: 4px;
+}
+
+.member-list .role {
+  font-size: 0.8rem;
+  color: #6e7285;
+}
+
+.member-list .name {
+  color: #e0e0e0;
+  font-weight: 500;
+}
+
+/* 3. 링크 영역 */
+.links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.links li {
+  margin-bottom: 10px;
+}
+
+.links a {
+  color: #b0b3c6;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.links a:hover {
+  color: #fca311; /* 호버 시 포인트 컬러 */
+  text-decoration: underline;
+}
+
+/* 구분선 */
+.footer-separator {
+  max-width: 1200px;
+  margin: 40px auto 20px;
+  height: 1px;
+  background-color: #363945;
+}
+
+/* 4. 하단 저작권 & SNS */
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons a {
+  color: #fff;
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+
+.social-icons a:hover {
+  transform: translateY(-3px); /* 아이콘 살짝 위로 뜸 */
+  color: #fca311;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .member-list li {
+    max-width: 100%;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
